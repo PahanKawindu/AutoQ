@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import './main_features_screens/reserve_your_spot_A.dart';
+import './main_features_screens/reserve_your_spot_B.dart';
 
 class UserHomeBody extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -39,72 +41,84 @@ class UserHomeBody extends StatelessWidget {
                   itemCount: services.length,
                   itemBuilder: (context, index) {
                     final service = services[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        elevation: 5,
-                        child: Container(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            children: [
-                              // Left side for text
-                              Expanded(
-                                flex: 2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      service['ServicePackgeName'] ??
-                                          'Service Name',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReserveYourSpotA(
+                              serviceDetails: service,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          elevation: 5,
+                          child: Container(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                // Left side for text
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        service['ServicePackgeName'] ??
+                                            'Service Name',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8.0),
-                                    Text(
-                                      'Approx Service Time: ${service['ApproxServiceTime'] ?? 'N/A'}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
+                                      const SizedBox(height: 8.0),
+                                      Text(
+                                        'Approx Service Time: ${service['ApproxServiceTime'] ?? 'N/A'}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8.0),
-                                    Text(
-                                      'Price: ${service['Price']}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
+                                      const SizedBox(height: 8.0),
+                                      Text(
+                                        'Price: ${service['Price']}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8.0),
-                                    Text(
-                                      'Vehicle Type: ${service['VehicleType']}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
+                                      const SizedBox(height: 8.0),
+                                      Text(
+                                        'Vehicle Type: ${service['VehicleType']}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Right side for image
-                              Expanded(
-                                flex: 1,
-                                child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Image.network(
-                                    service['ServiceImage'] ??
-                                        'https://placehold.co/600x400.png',
-                                    height: 120,
-                                    fit: BoxFit.cover,
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
+                                // Right side for image
+                                Expanded(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Image.network(
+                                      service['ServiceImage'] ??
+                                          'https://placehold.co/600x400.png',
+                                      height: 120,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -135,6 +149,14 @@ class UserHomeBody extends StatelessWidget {
                       description: 'Book your service appointment today.',
                       imageUrl: 'https://placehold.co/100x100.png',
                       backgroundColor: const Color(0xFFE8F6F3),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReserveYourSpotB(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 16),
                     _buildAdditionalCard(
@@ -164,58 +186,64 @@ class UserHomeBody extends StatelessWidget {
   }
 
   // Helper method to build each additional card
-  Widget _buildAdditionalCard(BuildContext context,
-      {required String title,
+  Widget _buildAdditionalCard(
+      BuildContext context, {
+        required String title,
         required String description,
         required String imageUrl,
-        required Color backgroundColor}) {
-    return Card(
-      color: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            // Left side for text
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+        required Color backgroundColor,
+        VoidCallback? onTap,
+      }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              // Left side for text
+              Expanded(
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Text(
-                    description,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
+                    const SizedBox(height: 8.0),
+                    Text(
+                      description,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            // Right side for image
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Image.network(
-                  imageUrl,
-                  height: 80,
-                  fit: BoxFit.cover,
+                  ],
                 ),
               ),
-            ),
-          ],
+              // Right side for image
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Image.network(
+                    imageUrl,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
