@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // QueueService class
 class QueueService {
@@ -69,6 +70,107 @@ class QueueService {
       };
     } catch (e) {
       return {'nextQueueNumber': 1, 'estimatedQueueTime': 'Error'};
+    }
+  }
+
+  Future<Map<String, dynamic>> getTodayQueueInfo() async {
+    try {
+      DateTime today = DateTime.now();
+      DateTime startOfDay = DateTime(today.year, today.month, today.day);
+      DateTime endOfDay = startOfDay.add(Duration(days: 1));
+
+      // Get how many positions are there today
+      QuerySnapshot queueSnapshot = await _firestore
+          .collection('queue')
+          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
+          .get();
+      int totalPositionsToday = queueSnapshot.docs.length;
+
+
+      // Get the current servicing position number
+      QuerySnapshot servicingSnapshot = await _firestore
+          .collection('queue')
+          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
+          .where('status', isEqualTo: 'servicing')
+          .get();
+      String currentServicingPosition = servicingSnapshot.docs.isNotEmpty
+          ? servicingSnapshot.docs.first['positionNo']
+          : 'Closed.'; // -1 if no servicing position is found
+
+
+
+      // Check if there is a reservation for today for the current user
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? uid = prefs.getString('uid');
+      if (uid == null) {
+        return {'error': 'User not logged in'};
+      }
+
+      QuerySnapshot reservationSnapshot = await _firestore
+          .collection('appointments')
+          .where('uid', isEqualTo: uid)
+          .where('appointmentDate', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('appointmentDate', isLessThan: Timestamp.fromDate(endOfDay))
+          .get();
+      bool hasReservation = reservationSnapshot.docs.isNotEmpty;
+      String? appointmentId;
+      int? userPosition;
+
+
+
+      if (hasReservation) {
+        var reservationDoc = reservationSnapshot.docs.first;
+        appointmentId = reservationDoc['appointmentId'];
+
+        // Get the user's position in the queue
+        QuerySnapshot userQueueSnapshot = await _firestore
+            .collection('queue')
+            .where('appointmentId', isEqualTo: appointmentId)
+            .get();
+        if (userQueueSnapshot.docs.isNotEmpty) {
+          var userQueueDoc = userQueueSnapshot.docs.first;
+          userPosition = userQueueDoc['positionNo'];
+        }
+      }
+
+
+
+      // Check if the vehicle is serviced
+      bool isServiced = false;
+      if (userPosition != null) {
+        QuerySnapshot positionSnapshot = await _firestore
+            .collection('queue')
+            .where('appointmentId', isEqualTo: appointmentId)
+            .where('positionNo', isEqualTo: userPosition)
+            .get();
+        if (positionSnapshot.docs.isNotEmpty) {
+          var positionDoc = positionSnapshot.docs.first;
+          if (positionDoc['status'] == 'completed') {
+            isServiced = true;
+          }
+        }
+      }
+
+      print('totalPositionsToday: $totalPositionsToday');
+      print('currentServicingPosition: $currentServicingPosition');
+      print('hasReservation: $hasReservation');
+      print('userPosition: $userPosition');
+      print('isServiced: $isServiced');
+
+
+      // Returning the result
+      return {
+        'totalPositionsToday': totalPositionsToday,
+        'currentServicingPosition': currentServicingPosition,
+        'hasReservation': hasReservation,
+        'userPosition': userPosition,
+        'isServiced': isServiced,
+      };
+
+    } catch (e) {
+      return {'error': 'Error occurred while fetching queue info'};
     }
   }
 }
