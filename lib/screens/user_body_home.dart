@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:test_flutter1/common/AboutUsScreen.dart';
+import 'package:test_flutter1/screens/main_features_screens/check_queue.dart';
 import './main_features_screens/reserve_your_spot_A.dart';
 import './main_features_screens/reserve_your_spot_B.dart';
 
@@ -166,6 +168,14 @@ class UserHomeBody extends StatelessWidget {
                       'Stay updated on your service progress in real-time.',
                       imageUrl: 'https://placehold.co/100x100.png',
                       backgroundColor: const Color(0xFFE8F6F3),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckQueue(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 16),
                     _buildAdditionalCard(
@@ -174,6 +184,14 @@ class UserHomeBody extends StatelessWidget {
                       description: 'Learn more about our services and team.',
                       imageUrl: 'https://placehold.co/100x100.png',
                       backgroundColor: const Color(0xFFE8F6F3),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AboutUsScreen(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
