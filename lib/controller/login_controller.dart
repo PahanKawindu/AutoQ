@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../screens/home_screen_admin.dart'; // Import admin screen
+import 'package:test_flutter1/screens/home_screen_admin_main.dart';
 import '../screens/home_screen_user_main.dart'; // Import user screen
 
 class LoginController {
