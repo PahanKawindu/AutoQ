@@ -42,7 +42,7 @@ class _ContentMiddleState extends State<ContentMiddle> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 50),
+        SizedBox(height: 20),
         widget.totalPositionsToday != 0
             ? Column(
           crossAxisAlignment: CrossAxisAlignment.start,

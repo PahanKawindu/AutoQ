@@ -57,6 +57,7 @@ class _CheckQueueState extends State<CheckQueue> {
                     ContentTop(
                       totalPositionsToday: data['totalPositionsToday'] ?? 0,
                       currentServicingPosition: int.tryParse(data['currentServicingPosition']?.toString() ?? '0') ?? 0,
+                      userPosition: (data['userPosition']?.toString() ?? 'Not found'),
                     ),
                     SizedBox(height: 10),
                     ContentMiddle(
