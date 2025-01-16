@@ -39,7 +39,10 @@ dependencies:
   firebase_core: ^3.6.0
   firebase_auth: ^5.3.3
   cloud_firestore: ^5.5.0
-  smooth_page_indicator: 1.2.0+3
+  smooth_page_indicator: ^1.2.0+3
+  shared_preferences: ^2.3.5
+  intl: ^0.20.1
+  table_calendar: ^3.2.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.1"
@@ -48,7 +51,8 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/icon"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -70,6 +74,8 @@ flutter:
 
   assets:
     - assets/icon/icon.png
+    - assets/vehicle.png
+    - assets/servicing-gun.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
