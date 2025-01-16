@@ -29,6 +29,7 @@ class SignupController {
         'contact_no': contactNo,
         'email': email,
         'uid': userCredential.user!.uid,
+        'user_role': "user",
         'created_at': Timestamp.now(),
       });
 
