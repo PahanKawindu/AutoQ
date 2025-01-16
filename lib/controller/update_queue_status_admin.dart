@@ -58,8 +58,8 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
               },
             ),
             RadioListTile<String>(
-              title: Text('Canceled'),
-              value: 'canceled',
+              title: Text('Servicing'),
+              value: 'servicing',
               groupValue: _selectedStatus,
               onChanged: (String? value) {
                 setState(() {
@@ -68,8 +68,18 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
               },
             ),
             RadioListTile<String>(
-              title: Text('Servicing'),
-              value: 'servicing',
+              title: Text('Waiting'),
+              value: 'waiting',
+              groupValue: _selectedStatus,
+              onChanged: (String? value) {
+                setState(() {
+                  _selectedStatus = value;
+                });
+              },
+            ),
+            RadioListTile<String>(
+              title: Text('Canceled'),
+              value: 'canceled',
               groupValue: _selectedStatus,
               onChanged: (String? value) {
                 setState(() {

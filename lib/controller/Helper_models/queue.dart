@@ -12,17 +12,22 @@ class QueueService {
 
       QuerySnapshot queueSnapshot = await _firestore
           .collection('queue')
-          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(normalizedDate))
-          .where('queueTime', isLessThan: Timestamp.fromDate(normalizedDate.add(Duration(days: 1))))
+          .where('queueTime',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(normalizedDate))
+          .where('queueTime',
+              isLessThan:
+                  Timestamp.fromDate(normalizedDate.add(Duration(days: 1))))
           .orderBy('positionNo', descending: true)
           .limit(1)
           .get();
 
       if (queueSnapshot.docs.isEmpty) {
-        DateTime estimatedTime = DateTime(normalizedDate.year, normalizedDate.month, normalizedDate.day, 8, 0);
+        DateTime estimatedTime = DateTime(normalizedDate.year,
+            normalizedDate.month, normalizedDate.day, 8, 0);
         return {
           'nextQueueNumber': 1,
-          'estimatedQueueTime': DateFormat('yyyy-MM-dd HH:mm:ss').format(estimatedTime),
+          'estimatedQueueTime':
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(estimatedTime),
         };
       }
 
@@ -38,7 +43,10 @@ class QueueService {
           .get();
 
       if (appointmentSnapshot.docs.isEmpty) {
-        return {'nextQueueNumber': highestPositionNo + 1, 'estimatedQueueTime': 'No appointments found'};
+        return {
+          'nextQueueNumber': highestPositionNo + 1,
+          'estimatedQueueTime': 'No appointments found'
+        };
       }
 
       var appointmentDoc = appointmentSnapshot.docs.first;
@@ -50,7 +58,10 @@ class QueueService {
           .get();
 
       if (serviceSnapshot.docs.isEmpty) {
-        return {'nextQueueNumber': highestPositionNo + 1, 'estimatedQueueTime': 'No service found'};
+        return {
+          'nextQueueNumber': highestPositionNo + 1,
+          'estimatedQueueTime': 'No service found'
+        };
       }
 
       var serviceDoc = serviceSnapshot.docs.first;
@@ -60,13 +71,15 @@ class QueueService {
       int hours = int.parse(timeParts[0].replaceAll('h', '').trim());
       int minutes = int.parse(timeParts[1].replaceAll('m', '').trim());
 
-      DateTime estimatedPositionTime = queueTime.add(Duration(hours: hours, minutes: minutes));
+      DateTime estimatedPositionTime =
+          queueTime.add(Duration(hours: hours, minutes: minutes));
 
       int nextQueueNumber = highestPositionNo + 1;
 
       return {
         'nextQueueNumber': nextQueueNumber,
-        'estimatedQueueTime': DateFormat('yyyy-MM-dd HH:mm:ss').format(estimatedPositionTime),
+        'estimatedQueueTime':
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(estimatedPositionTime),
       };
     } catch (e) {
       return {'nextQueueNumber': 1, 'estimatedQueueTime': 'Error'};
@@ -82,7 +95,8 @@ class QueueService {
       // Get how many positions are there today
       QuerySnapshot queueSnapshot = await _firestore
           .collection('queue')
-          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('queueTime',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
           .get();
       int totalPositionsToday = queueSnapshot.docs.length;
@@ -91,14 +105,30 @@ class QueueService {
       // Get the current servicing position number
       QuerySnapshot servicingSnapshot = await _firestore
           .collection('queue')
-          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('queueTime',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
-          .where('status', whereIn: ['servicing', 'completed'])
-          .get();
+          .where('status', whereIn: ['servicing', 'completed']).get();
       String currentServicingPosition = servicingSnapshot.docs.isNotEmpty
           ? servicingSnapshot.docs.first['positionNo'].toString()
           : 'Closed.'; // -1 if no servicing position is found
-      print('currentServicingPosition: $currentServicingPosition');
+      //print('currentServicingPosition: $currentServicingPosition');
+
+      if (totalPositionsToday > 0) {
+        QuerySnapshot lastPositionSnapshot = await _firestore
+            .collection('queue')
+            .where('positionNo', isEqualTo: totalPositionsToday)
+            .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+            .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
+            .where('status', isEqualTo: 'completed')
+            .get();
+
+        if (lastPositionSnapshot.docs.isNotEmpty) {
+          currentServicingPosition = totalPositionsToday.toString();
+        }
+      }
+
+      //print('currentServicingPosition: $currentServicingPosition');
 
 
       // Check if there is a reservation for today for the current user
@@ -111,14 +141,14 @@ class QueueService {
       QuerySnapshot reservationSnapshot = await _firestore
           .collection('appointments')
           .where('uid', isEqualTo: uid)
-          .where('appointmentDate', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('appointmentDate',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
           .where('appointmentDate', isLessThan: Timestamp.fromDate(endOfDay))
           .get();
       bool hasReservation = reservationSnapshot.docs.isNotEmpty;
       String? appointmentId;
       int? userPosition;
       //print('hasReservation: $hasReservation');
-
 
       if (hasReservation) {
         var reservationDoc = reservationSnapshot.docs.first;
@@ -134,8 +164,7 @@ class QueueService {
           userPosition = userQueueDoc['positionNo'];
         }
       }
-      print('userPosition: $userPosition');
-
+      //print('userPosition: $userPosition');
 
       // Check if the vehicle is serviced
       bool isServiced = false;
@@ -155,7 +184,6 @@ class QueueService {
 
       //print('isServiced: $isServiced');
 
-
       // Returning the result
       return {
         'totalPositionsToday': totalPositionsToday,
@@ -164,7 +192,6 @@ class QueueService {
         'userPosition': userPosition,
         'isServiced': isServiced,
       };
-
     } catch (e) {
       return {'error': 'Error occurred while fetching queue info'};
     }
@@ -179,7 +206,8 @@ class QueueService {
       // Fetch all queue records for today
       QuerySnapshot queueSnapshot = await _firestore
           .collection('queue')
-          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('queueTime',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
           .get();
 
@@ -203,7 +231,8 @@ class QueueService {
 
           // Add relevant data to the list
           queueRecords.add({
-            'appointmentDate': DateFormat('yyyy-MM-dd HH:mm:ss').format(appointmentDate),
+            'appointmentDate':
+                DateFormat('yyyy-MM-dd HH:mm:ss').format(appointmentDate),
             'appointmentId': appointmentId,
             'positionNo': positionNo,
             'status': status,
@@ -223,17 +252,22 @@ class QueueService {
 
     try {
       // Fetch appointments
-      QuerySnapshot appointmentsSnapshot = await _firestore.collection('appointments').get();
+      QuerySnapshot appointmentsSnapshot =
+          await _firestore.collection('appointments').get();
 
       for (var appointmentDoc in appointmentsSnapshot.docs) {
         var appointmentData = appointmentDoc.data() as Map<String, dynamic>;
 
         // Fetch user details based on uid
-        var userDoc = await _firestore.collection('users').doc(appointmentData['uid']).get();
+        var userDoc = await _firestore
+            .collection('users')
+            .doc(appointmentData['uid'])
+            .get();
         var userData = userDoc.data() as Map<String, dynamic>;
 
         // Fetch service details based on serviceId
-        var serviceDoc = await _firestore.collection('AutoQ_service')
+        var serviceDoc = await _firestore
+            .collection('AutoQ_service')
             .where('ServceID', isEqualTo: appointmentData['serviceId'])
             .get();
 
@@ -242,7 +276,8 @@ class QueueService {
             : {};
 
         // Fetch queue details based on appointmentId
-        var queueDoc = await _firestore.collection('queue')
+        var queueDoc = await _firestore
+            .collection('queue')
             .where('appointmentId', isEqualTo: appointmentData['appointmentId'])
             .get();
 
@@ -276,8 +311,10 @@ class QueueService {
     try {
       // Get current date
       DateTime today = DateTime.now();
-      DateTime startOfDay = DateTime(today.year, today.month, today.day, 0, 0, 0);
-      DateTime endOfDay = DateTime(today.year, today.month, today.day, 23, 59, 59);
+      DateTime startOfDay =
+          DateTime(today.year, today.month, today.day, 0, 0, 0);
+      DateTime endOfDay =
+          DateTime(today.year, today.month, today.day, 23, 59, 59);
 
       // Query for today's queue data
       QuerySnapshot queueSnapshot = await _firestore
@@ -306,10 +343,8 @@ class QueueService {
 
         // Fetch user details
         String uid = appointmentDoc['uid'];
-        DocumentSnapshot userDoc = await _firestore
-            .collection('users')
-            .doc(uid)
-            .get();
+        DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(uid).get();
 
         todayQueue.add({
           'first_name': userDoc['first_name'],
@@ -330,5 +365,4 @@ class QueueService {
       return [];
     }
   }
-
 }
