@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.3.5
   intl: ^0.20.1
   table_calendar: ^3.2.0
+  firebase_messaging: ^15.2.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.1"

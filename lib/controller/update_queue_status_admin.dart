@@ -1,6 +1,9 @@
+// Import the necessary files
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart'; // To format the date
+import 'package:test_flutter1/controller/Helper_models/service_history.dart';
+import 'notification_handler.dart'; // Import notification handler
 
 class UpdateQueueStatusAdmin extends StatefulWidget {
   final Map<String, dynamic> queueData;
@@ -117,6 +120,12 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
       await _firestore.collection('queue').doc(widget.queueData['appointmentId']).update({
         'status': _selectedStatus,
       });
+
+      // If the status is 'completed', call additional methods
+      if (_selectedStatus == 'completed') {
+        await NotificationHandler.notifyServiceStatus(widget.queueData); // Notify service status
+        await ServiceHistory.updateServiceHistory(widget.queueData); // Update service history
+      }
 
       // Show success message
       _showSuccessMessage();
