@@ -93,12 +93,12 @@ class QueueService {
           .collection('queue')
           .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
-          .where('status', isEqualTo: 'servicing')
+          .where('status', whereIn: ['servicing', 'completed'])
           .get();
       String currentServicingPosition = servicingSnapshot.docs.isNotEmpty
           ? servicingSnapshot.docs.first['positionNo'].toString()
           : 'Closed.'; // -1 if no servicing position is found
-      //print('currentServicingPosition: $currentServicingPosition');
+      print('currentServicingPosition: $currentServicingPosition');
 
 
       // Check if there is a reservation for today for the current user
@@ -134,7 +134,7 @@ class QueueService {
           userPosition = userQueueDoc['positionNo'];
         }
       }
-      //print('userPosition: $userPosition');
+      print('userPosition: $userPosition');
 
 
       // Check if the vehicle is serviced
@@ -214,6 +214,119 @@ class QueueService {
 
       return queueRecords;
     } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getAllReservations() async {
+    List<Map<String, dynamic>> reservations = [];
+
+    try {
+      // Fetch appointments
+      QuerySnapshot appointmentsSnapshot = await _firestore.collection('appointments').get();
+
+      for (var appointmentDoc in appointmentsSnapshot.docs) {
+        var appointmentData = appointmentDoc.data() as Map<String, dynamic>;
+
+        // Fetch user details based on uid
+        var userDoc = await _firestore.collection('users').doc(appointmentData['uid']).get();
+        var userData = userDoc.data() as Map<String, dynamic>;
+
+        // Fetch service details based on serviceId
+        var serviceDoc = await _firestore.collection('AutoQ_service')
+            .where('ServceID', isEqualTo: appointmentData['serviceId'])
+            .get();
+
+        var serviceData = serviceDoc.docs.isNotEmpty
+            ? serviceDoc.docs.first.data() as Map<String, dynamic>
+            : {};
+
+        // Fetch queue details based on appointmentId
+        var queueDoc = await _firestore.collection('queue')
+            .where('appointmentId', isEqualTo: appointmentData['appointmentId'])
+            .get();
+
+        var queueData = queueDoc.docs.isNotEmpty
+            ? queueDoc.docs.first.data() as Map<String, dynamic>
+            : {};
+
+        // Combine data
+        reservations.add({
+          'first_name': userData['first_name'],
+          'last_name': userData['last_name'],
+          'email': userData['email'],
+          'contact_no': userData['contact_no'],
+          'appointmentDate': appointmentData['appointmentDate'],
+          'vehicleType': appointmentData['vehicleType'],
+          'vehicleRegNo': appointmentData['vehicleRegNo'],
+          'ChassisNo': appointmentData['ChassisNo'],
+          'serviceId': appointmentData['serviceId'],
+          'ServicePackgeName': serviceData['ServicePackgeName'],
+          'status': queueData['status'],
+        });
+      }
+    } catch (e) {
+      print("Error fetching reservations: $e");
+    }
+
+    return reservations;
+  }
+
+  Future<List<Map<String, dynamic>>> getTodayQueueWithVehicleType() async {
+    try {
+      // Get current date
+      DateTime today = DateTime.now();
+      DateTime startOfDay = DateTime(today.year, today.month, today.day, 0, 0, 0);
+      DateTime endOfDay = DateTime(today.year, today.month, today.day, 23, 59, 59);
+
+      // Query for today's queue data
+      QuerySnapshot queueSnapshot = await _firestore
+          .collection('queue')
+          .where('queueTime', isGreaterThanOrEqualTo: startOfDay)
+          .where('queueTime', isLessThanOrEqualTo: endOfDay)
+          .get();
+
+      List<Map<String, dynamic>> todayQueue = [];
+
+      for (var doc in queueSnapshot.docs) {
+        String appointmentId = doc['appointmentId'];
+
+        // Fetch appointment details
+        DocumentSnapshot appointmentDoc = await _firestore
+            .collection('appointments')
+            .doc(appointmentId)
+            .get();
+
+        // Fetch service details
+        int serviceId = appointmentDoc['serviceId'];
+        DocumentSnapshot serviceDoc = await _firestore
+            .collection('AutoQ_service')
+            .doc(serviceId.toString())
+            .get();
+
+        // Fetch user details
+        String uid = appointmentDoc['uid'];
+        DocumentSnapshot userDoc = await _firestore
+            .collection('users')
+            .doc(uid)
+            .get();
+
+        todayQueue.add({
+          'first_name': userDoc['first_name'],
+          'last_name': userDoc['last_name'],
+          'appointmentId': appointmentId,
+          'queueTime': doc['queueTime'],
+          'positionNo': doc['positionNo'],
+          'status': doc['status'],
+          'VehicleType': appointmentDoc['vehicleType'],
+          'vehicleRegNo': appointmentDoc['vehicleRegNo'],
+          'contact_no': userDoc['contact_no'],
+        });
+      }
+
+      return todayQueue;
+    } catch (e) {
+      print("Error fetching today's queue data: $e");
       return [];
     }
   }
