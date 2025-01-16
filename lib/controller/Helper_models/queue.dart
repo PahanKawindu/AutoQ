@@ -86,7 +86,7 @@ class QueueService {
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
           .get();
       int totalPositionsToday = queueSnapshot.docs.length;
-      print('totalPositionsToday: $totalPositionsToday');
+      //print('totalPositionsToday: $totalPositionsToday');
 
       // Get the current servicing position number
       QuerySnapshot servicingSnapshot = await _firestore
@@ -98,7 +98,7 @@ class QueueService {
       String currentServicingPosition = servicingSnapshot.docs.isNotEmpty
           ? servicingSnapshot.docs.first['positionNo'].toString()
           : 'Closed.'; // -1 if no servicing position is found
-      print('currentServicingPosition: $currentServicingPosition');
+      //print('currentServicingPosition: $currentServicingPosition');
 
 
       // Check if there is a reservation for today for the current user
@@ -117,7 +117,7 @@ class QueueService {
       bool hasReservation = reservationSnapshot.docs.isNotEmpty;
       String? appointmentId;
       int? userPosition;
-      print('hasReservation: $hasReservation');
+      //print('hasReservation: $hasReservation');
 
 
       if (hasReservation) {
@@ -134,7 +134,7 @@ class QueueService {
           userPosition = userQueueDoc['positionNo'];
         }
       }
-      print('userPosition: $userPosition');
+      //print('userPosition: $userPosition');
 
 
       // Check if the vehicle is serviced
@@ -153,7 +153,7 @@ class QueueService {
         }
       }
 
-      print('isServiced: $isServiced');
+      //print('isServiced: $isServiced');
 
 
       // Returning the result
