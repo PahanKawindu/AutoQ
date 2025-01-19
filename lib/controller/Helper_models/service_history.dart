@@ -30,20 +30,22 @@ class ServiceHistory {
 
     for (String appointmentId in appointmentIds) {
       // Fetch appointment details
-      final QuerySnapshot<Map<String, dynamic>> appointmentSnapshot = await _firestore
-          .collection('appointments')
-          .where('appointmentId', isEqualTo: appointmentId)
-          .get();
+      final QuerySnapshot<Map<String, dynamic>> appointmentSnapshot =
+          await _firestore
+              .collection('appointments')
+              .where('appointmentId', isEqualTo: appointmentId)
+              .get();
 
       if (appointmentSnapshot.docs.isEmpty) continue;
 
       final appointmentData = appointmentSnapshot.docs.first.data();
 
       // Fetch service details
-      final QuerySnapshot<Map<String, dynamic>> serviceSnapshot = await _firestore
-          .collection('AutoQ_service')
-          .where('ServceID', isEqualTo: appointmentData['serviceId'])
-          .get();
+      final QuerySnapshot<Map<String, dynamic>> serviceSnapshot =
+          await _firestore
+              .collection('AutoQ_service')
+              .where('ServceID', isEqualTo: appointmentData['serviceId'])
+              .get();
 
       if (serviceSnapshot.docs.isEmpty) continue;
 
@@ -60,5 +62,11 @@ class ServiceHistory {
     }
 
     return serviceHistory;
+  }
+
+  static Future<void> updateServiceHistory(
+      Map<String, dynamic> queueData) async {
+    print('Service history updated with the following data:');
+    print(queueData);
   }
 }

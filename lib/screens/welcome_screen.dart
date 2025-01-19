@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_flutter1/screens/signup_screen.dart';
-import 'package:test_flutter1/screens/home_screen_admin.dart';
+import 'package:test_flutter1/screens/home_screen_admin_main.dart';
 import 'package:test_flutter1/screens/home_screen_user_main.dart';
 
 import 'login_screen.dart';
@@ -9,32 +9,8 @@ import 'login_screen.dart';
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
-  Future<void> checkSession(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userRole = prefs.getString('userRole');
-    String? uid = prefs.getString('uid');
-
-    if (uid != null) {
-      // Redirect based on user role
-      if (userRole == 'admin') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreenAdmin()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreenUser()),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Check session on widget load
-    WidgetsBinding.instance.addPostFrameCallback((_) => checkSession(context));
-
     return Scaffold(
       backgroundColor: const Color(0xFF46C2AF), // Teal background color
       body: Column(
