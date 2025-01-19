@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Import for SVG support
 import 'package:test_flutter1/common/AboutUsScreen.dart';
 import 'package:test_flutter1/screens/main_features_screens/check_queue.dart';
 import './main_features_screens/reserve_your_spot_A.dart';
@@ -149,7 +150,7 @@ class UserHomeBody extends StatelessWidget {
                       context,
                       title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
-                      imageUrl: 'https://placehold.co/100x100.png',
+                      imagePath: 'assets/images/reserve.svg', // Updated to SVG path
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -166,7 +167,7 @@ class UserHomeBody extends StatelessWidget {
                       title: 'Check the Queue',
                       description:
                       'Stay updated on your service progress in real-time.',
-                      imageUrl: 'https://placehold.co/100x100.png',
+                      imagePath: 'assets/images/check.svg', // Another SVG path
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -182,7 +183,7 @@ class UserHomeBody extends StatelessWidget {
                       context,
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
-                      imageUrl: 'https://placehold.co/100x100.png',
+                      imagePath: 'assets/images/about.svg', // SVG for About Us
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -208,7 +209,7 @@ class UserHomeBody extends StatelessWidget {
       BuildContext context, {
         required String title,
         required String description,
-        required String imageUrl,
+        required String imagePath, // Updated to accept an asset path
         required Color backgroundColor,
         VoidCallback? onTap,
       }) {
@@ -248,15 +249,15 @@ class UserHomeBody extends StatelessWidget {
                   ],
                 ),
               ),
-              // Right side for image
+              // Right side for SVG image
               Expanded(
                 flex: 1,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Image.network(
-                    imageUrl,
+                  child: SvgPicture.asset(
+                    imagePath,
                     height: 80,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

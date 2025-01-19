@@ -19,7 +19,8 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
 
   // Fetch the queue data
   Future<void> _fetchTodayQueue() async {
-    List<Map<String, dynamic>> queueData = await QueueService().getTodayQueueWithVehicleType();
+    List<Map<String, dynamic>> queueData =
+    await QueueService().getTodayQueueWithVehicleType();
     setState(() {
       _todayQueue = queueData;
       _isLoading = false;
@@ -84,25 +85,28 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
                     children: [
                       Text('Status: ${queueItem['status']}'),
                       SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          // Navigate to UpdateQueueStatusAdmin screen and wait for result
-                          bool? result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UpdateQueueStatusAdmin(
-                                queueData: queueItem,
+                      if (queueItem['status'] != 'completed' &&
+                          queueItem['status'] != 'canceled')
+                        ElevatedButton(
+                          onPressed: () async {
+                            // Navigate to UpdateQueueStatusAdmin screen and wait for result
+                            bool? result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    UpdateQueueStatusAdmin(
+                                      queueData: queueItem,
+                                    ),
                               ),
-                            ),
-                          );
+                            );
 
-                          // If result is true, refresh the queue data
-                          if (result != null && result) {
-                            _fetchTodayQueue(); // Refresh the data
-                          }
-                        },
-                        child: Text('Update Status'),
-                      ),
+                            // If result is true, refresh the queue data
+                            if (result != null && result) {
+                              _fetchTodayQueue(); // Refresh the data
+                            }
+                          },
+                          child: Text('Update Status'),
+                        ),
                     ],
                   ),
                 ],

@@ -38,56 +38,107 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Profile'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: _userInfo == null
           ? Center(child: CircularProgressIndicator())
           : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Profile Image
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/icon/icon.png'), // Default image
-              foregroundImage: _userInfo?['profile_image'] != null
-                  ? NetworkImage(_userInfo!['profile_image'])
-                  : null, // Display profile image from Firestore if available
+            // Profile Image and Name
+            Center(
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Color(0xFF46C2AF),
+                    child: CircleAvatar(
+                      radius: 48,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        size: 60,
+                        color: Color(0xFF46C2AF),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    '${_userInfo?['first_name'] ?? ''} ${_userInfo?['last_name'] ?? ''}',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    _userInfo?['email'] ?? '',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 16),
-            // Full Name
-            Text(
-              '${_userInfo?['first_name'] ?? ''} ${_userInfo?['last_name'] ?? ''}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            // User Info
+            SizedBox(height: 24),
+            // User Details
             Expanded(
               child: ListView(
                 children: [
-                  Text(
-                    'Email: ${_userInfo?['email'] ?? 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                  _buildInfoCard(
+                    icon: Icons.phone,
+                    label: 'Contact No',
+                    value: _userInfo?['contact_no'] ?? 'N/A',
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Contact No: ${_userInfo?['contact_no'] ?? 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                  _buildInfoCard(
+                    icon: Icons.person_outline,
+                    label: 'User Role',
+                    value: _userInfo?['user_role'] ?? 'N/A',
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'User Role: ${_userInfo?['user_role'] ?? 'N/A'}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Account Created: ${_userInfo?['created_at'] != null ? (_userInfo!['created_at'] as Timestamp).toDate().toString() : 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                  _buildInfoCard(
+                    icon: Icons.date_range,
+                    label: 'Account Created',
+                    value: _userInfo?['created_at'] != null
+                        ? (_userInfo!['created_at'] as Timestamp)
+                        .toDate()
+                        .toString()
+                        : 'N/A',
                   ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(
+      {required IconData icon, required String label, required String value}) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Color(0xFF46C2AF),
+          child: Icon(icon, color: Colors.white),
+        ),
+        title: Text(
+          label,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF34A0A4),
+          ),
+        ),
+        subtitle: Text(
+          value,
+          style: TextStyle(fontSize: 16, color: Colors.grey[800]),
         ),
       ),
     );

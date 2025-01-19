@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart'; // Import for Firebase Messaging
 import 'package:flutter/material.dart';
 import 'package:test_flutter1/screens/login_screen.dart'; // Import LoginScreen
 
@@ -22,7 +23,10 @@ class SignupController {
         password: password,
       );
 
-      // Store user information in Firestore
+      // Retrieve the Firebase token
+      String? token = await FirebaseMessaging.instance.getToken();
+
+      // Store user information in Firestore, including the token
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'first_name': firstName,
         'last_name': lastName,
@@ -31,6 +35,7 @@ class SignupController {
         'uid': userCredential.user!.uid,
         'user_role': "user",
         'created_at': Timestamp.now(),
+        'device_token': token, // Add the token here
       });
 
       // Show success message with icon
