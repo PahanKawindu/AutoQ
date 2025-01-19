@@ -42,8 +42,6 @@ class _SelectPackageState extends State<SelectPackage> {
   Future<void> savePackageId(int packageId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('selectedPackage', packageId);
-    int? selectedPackage = prefs.getInt('selectedPackage');
-    //print('Selected Package: $selectedPackage');
   }
 
   Future<void> removePackageId() async {
@@ -61,7 +59,7 @@ class _SelectPackageState extends State<SelectPackage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Select Package'),
-          backgroundColor: Color(0xFF34A0A4),
+          backgroundColor: Color(0xFF46C2AF),
         ),
         body: selectedVehicle == null
             ? Center(child: Text('No vehicle selected'))
@@ -86,52 +84,75 @@ class _SelectPackageState extends State<SelectPackage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
                 ),
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              package['ServicePackgeName'] ?? 'Package Name',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Approx Time: ${package['ApproxServiceTime'] ?? 'N/A'}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Price: ${package['Price']}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
+                elevation: 12,
+                shadowColor: Colors.black.withOpacity(0.3),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.orangeAccent.withOpacity(0.8),
+                          Colors.pinkAccent.withOpacity(0.6),
+                          Colors.purple.withOpacity(0.4),
+                          Colors.blue.withOpacity(0.3),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Image.network(
-                          package['ServiceImage'] ??
-                              'https://placehold.co/100x100.png',
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  package['ServicePackgeName'] ?? 'Package Name',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'Approx Time: ${package['ApproxServiceTime'] ?? 'N/A'}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'Price: ${package['Price']}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.yellowAccent,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                package['ServiceImage'] ?? 'https://placehold.co/100x100.png',
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),

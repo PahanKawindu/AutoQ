@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Add this for SVG support
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'select_packge.dart';
@@ -7,33 +8,30 @@ class SelectVehicle extends StatelessWidget {
   final List<Map<String, String>> vehicles = [
     {
       'name': 'Car',
-      'image': 'https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI'
+      'image': 'assets/images/car.png', // SVG file
     },
     {
       'name': 'Bike',
-      'image': 'https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI'
+      'image': 'assets/images/bike.png', // PNG file
     },
     {
       'name': 'Truck',
-      'image': 'https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI'
+      'image': 'assets/images/lorry.png', // PNG file
     },
     {
       'name': 'Bus',
-      'image': 'https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI'
+      'image': 'assets/images/bus.png', // PNG file
     },
   ];
 
   Future<void> saveSelectedVehicle(String vehicle) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedVehicle', vehicle);
-    String? selectedVehicle = prefs.getString('selectedVehicle');
-    //print('Selected Vehicle: $selectedVehicle');
   }
 
   Future<void> removeSelectedVehicle() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('selectedVehicle');
-
   }
 
   void navigateToNextScreen(BuildContext context) {
@@ -59,7 +57,7 @@ class SelectVehicle extends StatelessWidget {
               Text(
                 'Select Your Vehicle Type',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -83,16 +81,24 @@ class SelectVehicle extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.network(
+                            vehicles[index]['image']!.endsWith('.svg')
+                                ? SvgPicture.asset(
                               vehicles[index]['image']!,
-                              height: 80,
-                              width: 80,
+                              height: 50,
+                              width: 50,
+                              fit: BoxFit.cover,
+                            )
+                                : Image.asset(
+                              vehicles[index]['image']!,
+                              height: 50,
+                              width: 50,
                               fit: BoxFit.cover,
                             ),
                             SizedBox(height: 8),
                             Text(
                               vehicles[index]['name']!,
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),

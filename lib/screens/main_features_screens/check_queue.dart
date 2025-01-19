@@ -31,7 +31,7 @@ class _CheckQueueState extends State<CheckQueue> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Check Queue'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshQueueData,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:test_flutter1/common/AboutUsScreen.dart';
 import 'package:test_flutter1/screens/main_features_screens/check_queue.dart';
@@ -72,8 +73,7 @@ class UserHomeBody extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        service['ServicePackgeName'] ??
-                                            'Service Name',
+                                        service['ServicePackgeName'] ?? 'Service Name',
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -111,9 +111,8 @@ class UserHomeBody extends StatelessWidget {
                                   flex: 1,
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.network(
-                                      service['ServiceImage'] ??
-                                          'https://placehold.co/600x400.png',
+                                    child: SvgPicture.asset(
+                                      'assets/images/service_icon.svg', // Example SVG path
                                       height: 120,
                                       fit: BoxFit.cover,
                                     ),
@@ -149,7 +148,7 @@ class UserHomeBody extends StatelessWidget {
                       context,
                       title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
-                      imageUrl: 'https://placehold.co/100x100.png',
+                      svgPath: 'assets/images/spot.svg',
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -166,7 +165,7 @@ class UserHomeBody extends StatelessWidget {
                       title: 'Check the Queue',
                       description:
                       'Stay updated on your service progress in real-time.',
-                      imageUrl: 'https://placehold.co/100x100.png',
+                      svgPath: 'assets/images/queue.svg',
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -182,7 +181,7 @@ class UserHomeBody extends StatelessWidget {
                       context,
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
-                      imageUrl: 'https://placehold.co/100x100.png',
+                      svgPath: 'assets/images/about.svg',
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -208,7 +207,7 @@ class UserHomeBody extends StatelessWidget {
       BuildContext context, {
         required String title,
         required String description,
-        required String imageUrl,
+        required String svgPath,
         required Color backgroundColor,
         VoidCallback? onTap,
       }) {
@@ -248,13 +247,13 @@ class UserHomeBody extends StatelessWidget {
                   ],
                 ),
               ),
-              // Right side for image
+              // Right side for SVG image
               Expanded(
                 flex: 1,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Image.network(
-                    imageUrl,
+                  child: SvgPicture.asset(
+                    svgPath,
                     height: 80,
                     fit: BoxFit.cover,
                   ),

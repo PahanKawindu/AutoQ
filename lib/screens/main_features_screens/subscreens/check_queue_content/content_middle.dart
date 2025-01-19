@@ -100,7 +100,7 @@ class _ContentMiddleState extends State<ContentMiddle> {
                                               child: Container(
                                                 padding: EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.teal,
+                                                  color: Color(0xFF46C2AF),
                                                   shape: BoxShape.circle,
                                                 ),
                                                 child: Text(
@@ -152,7 +152,7 @@ class _ContentMiddleState extends State<ContentMiddle> {
                               effect: WormEffect(
                                 dotWidth: 10,
                                 dotHeight: 10,
-                                activeDotColor: Colors.teal,
+                                activeDotColor: Color(0xFF46C2AF),
                                 dotColor: Colors.grey,
                               ),
                             ),

@@ -43,7 +43,7 @@ class _PaymentSuccessfulState extends State<PaymentSuccessful> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Payment Successful'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

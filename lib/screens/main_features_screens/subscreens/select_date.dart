@@ -96,7 +96,7 @@ class _SelectDateState extends State<SelectDate> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Date'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

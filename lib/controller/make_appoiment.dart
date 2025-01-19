@@ -98,7 +98,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Make Appointment'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: Center(
         child: _isLoading

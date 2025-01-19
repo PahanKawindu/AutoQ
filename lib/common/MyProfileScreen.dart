@@ -37,57 +37,112 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Profile'),
-        backgroundColor: Color(0xFF34A0A4),
+        title: Text('My Profile', style: TextStyle(fontSize: 18)),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: _userInfo == null
           ? Center(child: CircularProgressIndicator())
           : Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Profile Image
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/icon/icon.png'), // Default image
-              foregroundImage: _userInfo?['profile_image'] != null
-                  ? NetworkImage(_userInfo!['profile_image'])
-                  : null, // Display profile image from Firestore if available
+            // Profile Image and Name
+            Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 25),
+                  CircleAvatar(
+                    radius: 40, // Smaller profile image
+                    backgroundColor: Color(0xFF46C2AF),
+                    child: CircleAvatar(
+                      radius: 38,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        size: 40,
+                        color: Color(0xFF46C2AF),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    '${_userInfo?['first_name'] ?? ''} ${_userInfo?['last_name'] ?? ''}',
+                    style: TextStyle(
+                      fontSize: 20, // Smaller text
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    _userInfo?['email'] ?? '',
+                    style: TextStyle(
+                      fontSize: 14, // Smaller email text
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 16),
-            // Full Name
-            Text(
-              '${_userInfo?['first_name'] ?? ''} ${_userInfo?['last_name'] ?? ''}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            // User Info
+            // User Details
             Expanded(
               child: ListView(
                 children: [
-                  Text(
-                    'Email: ${_userInfo?['email'] ?? 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                  _buildInfoCard(
+                    icon: Icons.phone,
+                    label: 'Contact No',
+                    value: _userInfo?['contact_no'] ?? 'N/A',
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Contact No: ${_userInfo?['contact_no'] ?? 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                  SizedBox(height: 8), // Space between items
+                  _buildInfoCard(
+                    icon: Icons.person_outline,
+                    label: 'User Role',
+                    value: _userInfo?['user_role'] ?? 'N/A',
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'User Role: ${_userInfo?['user_role'] ?? 'N/A'}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Account Created: ${_userInfo?['created_at'] != null ? (_userInfo!['created_at'] as Timestamp).toDate().toString() : 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                  SizedBox(height: 8), // Space between items
+                  _buildInfoCard(
+                    icon: Icons.date_range,
+                    label: 'Account Created',
+                    value: _userInfo?['created_at'] != null
+                        ? (_userInfo!['created_at'] as Timestamp)
+                        .toDate()
+                        .toString()
+                        : 'N/A',
                   ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(
+      {required IconData icon, required String label, required String value}) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10), // Smaller border radius
+      ),
+      elevation: 3, // Reduced elevation
+      margin: const EdgeInsets.symmetric(vertical: 4), // Uniform margin
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 18, // Smaller icon size
+          backgroundColor: Color(0xFF46C2AF),
+          child: Icon(icon, color: Colors.white, size: 18),
+        ),
+        title: Text(
+          label,
+          style: TextStyle(
+            fontSize: 14, // Smaller label text
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF34A0A4),
+          ),
+        ),
+        subtitle: Text(
+          value,
+          style: TextStyle(fontSize: 12, color: Colors.grey[800]), // Smaller value text
         ),
       ),
     );

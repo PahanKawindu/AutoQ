@@ -23,7 +23,7 @@ class ReserveYourSpotB extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Reserve Spot B'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFF46C2AF),
       ),
       body: SelectVehicle(),
     );
