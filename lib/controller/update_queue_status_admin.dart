@@ -140,6 +140,13 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
       if (_selectedStatus == 'completed') {
         message = 'Dear $firstName $lastName, your $vehicleType ($vehicleRegNo) service has been completed successfully. You can now collect your vehicle at your earliest convenience. Thank you for choosing our service.';
         notificationStatus = 'Service Completed';
+
+        // Add a new document to the service-history collection
+        await _firestore.collection('service-history').doc(widget.queueData['appointmentId']).set({
+          'appointmentId': widget.queueData['appointmentId'],
+          'status': 'completed',
+          'uid': uid,
+        });
       }
 
       // If the status is 'canceled', send a cancellation message
@@ -157,7 +164,6 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
         message = 'Dear $firstName $lastName, the service process for your $vehicleType ($vehicleRegNo) has now started. We will keep you updated on the progress. Thank you for choosing our service.';
         notificationStatus = 'Service In Progress';
       }
-
 
       // Check if there's already an active message for the user in the active_messages collection
       var activeMessagesDoc = await _firestore.collection('active_messages').doc(uid).get();
