@@ -149,16 +149,17 @@ class _HomeScreenState extends State<HomeScreenUser> {
               Positioned(
                 top: 0,
                 left: 0,
-                right: 0,
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  height: 600, // Height of the sliding menu
+                  width: MediaQuery.of(context).size.width / 1.29, // Half of the screen width
+                  height: MediaQuery.of(context).size.height, // Full screen height
                   color: Colors.black.withOpacity(0.6), // Background overlay
                   child: TopSlideBar(), // Your custom slide bar
                 ),
               ),
           ],
         ),
+
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
