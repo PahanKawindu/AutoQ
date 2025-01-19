@@ -26,7 +26,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
   Future<void> _loadUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString('uid');
-    debugPrint('Saved Session Info: UID = $uid ');
+    //debugPrint('Saved Session Info: UID = $uid ');
 
     if (uid != null) {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
