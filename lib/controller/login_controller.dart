@@ -65,9 +65,9 @@ class LoginController {
         await prefs.setString('userRole', userRole);
 
         // Read and display session-related information
-        // String? savedUid = prefs.getString('uid');
-        // String? savedUserRole = prefs.getString('userRole');
-        // debugPrint('Saved Session Info: UID = $savedUid, UserRole = $savedUserRole');
+        String? savedUid = prefs.getString('uid');
+        String? savedUserRole = prefs.getString('userRole');
+        debugPrint('Saved Session Info: UID = $savedUid, UserRole = $savedUserRole');
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
