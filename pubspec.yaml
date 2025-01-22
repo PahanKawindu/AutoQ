@@ -84,16 +84,13 @@ flutter:
     - assets/icon/icon.png
     - assets/vehicle.png
     - assets/servicing-gun.jpg
-    - assets/account.json
-    - assets/images/reserve.svg
-    - assets/images/check.svg
     - assets/images/about.svg
-    - assets/images/car.svg
+    - assets/images/queue.svg
+    - assets/images/spot.svg
     - assets/images/bike.png
+    - assets/images/bus.png
     - assets/images/car.png
     - assets/images/lorry.png
-    - assets/images/bus.png
-
 
   # To add assets to your application, add an assets section, like this:
   # assets:

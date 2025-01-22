@@ -95,6 +95,7 @@ class ReserveYourSpotB extends StatelessWidget {
           body: SelectVehicle(),
         );
       },
+
     );
   }
 }

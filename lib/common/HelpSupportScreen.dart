@@ -109,6 +109,7 @@ class HelpSupportScreen extends StatelessWidget {
         fontSize: 22,
         fontWeight: FontWeight.bold,
         color: Color(0xFF46C2AF), // Updated color
+
       ),
     );
   }
@@ -183,3 +184,4 @@ class HelpSupportScreen extends StatelessWidget {
     );
   }
 }
+

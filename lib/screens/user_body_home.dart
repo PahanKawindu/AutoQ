@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // Import for SVG support
 import 'package:test_flutter1/common/AboutUsScreen.dart';
@@ -73,8 +74,7 @@ class UserHomeBody extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        service['ServicePackgeName'] ??
-                                            'Service Name',
+                                        service['ServicePackgeName'] ?? 'Service Name',
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -112,9 +112,8 @@ class UserHomeBody extends StatelessWidget {
                                   flex: 1,
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.network(
-                                      service['ServiceImage'] ??
-                                          'https://placehold.co/600x400.png',
+                                    child: SvgPicture.asset(
+                                      'assets/images/service_icon.svg', // Example SVG path
                                       height: 120,
                                       fit: BoxFit.cover,
                                     ),
@@ -150,7 +149,7 @@ class UserHomeBody extends StatelessWidget {
                       context,
                       title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
-                      imagePath: 'assets/images/reserve.svg', // Updated to SVG path
+                      svgPath: 'assets/images/spot.svg',
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -167,7 +166,7 @@ class UserHomeBody extends StatelessWidget {
                       title: 'Check the Queue',
                       description:
                       'Stay updated on your service progress in real-time.',
-                      imagePath: 'assets/images/check.svg', // Another SVG path
+                      svgPath: 'assets/images/queue.svg',
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -183,7 +182,7 @@ class UserHomeBody extends StatelessWidget {
                       context,
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
-                      imagePath: 'assets/images/about.svg', // SVG for About Us
+                      svgPath: 'assets/images/about.svg',
                       backgroundColor: const Color(0xFFE8F6F3),
                       onTap: () {
                         Navigator.push(
@@ -209,7 +208,7 @@ class UserHomeBody extends StatelessWidget {
       BuildContext context, {
         required String title,
         required String description,
-        required String imagePath, // Updated to accept an asset path
+        required String svgPath,
         required Color backgroundColor,
         VoidCallback? onTap,
       }) {
@@ -255,7 +254,7 @@ class UserHomeBody extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: SvgPicture.asset(
-                    imagePath,
+                    svgPath,
                     height: 80,
                     fit: BoxFit.contain,
                   ),

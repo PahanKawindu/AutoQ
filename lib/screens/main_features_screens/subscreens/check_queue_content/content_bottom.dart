@@ -35,7 +35,7 @@ class ContentBottom extends StatelessWidget {
                       builder: (context) => Scaffold(
                         appBar: AppBar(
                           title: Text('Select Vehicle'),
-                          backgroundColor: Colors.teal, // Customize the AppBar color if needed
+                          backgroundColor: Color(0xFF46C2AF), // Customize the AppBar color if needed
                         ),
                         body: SelectVehicle(), // Your SelectVehicle screen content
                       ),
