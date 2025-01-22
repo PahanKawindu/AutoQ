@@ -49,6 +49,7 @@ dependencies:
   googleapis: ^13.2.0
   firebase_analytics: ^11.4.0
   flutter_local_notifications: ^18.0.1
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.1"
@@ -83,6 +84,13 @@ flutter:
     - assets/vehicle.png
     - assets/servicing-gun.jpg
     - assets/account.json
+    - assets/images/about.svg
+    - assets/images/check.svg
+    - assets/images/reserve.svg
+    - assets/images/bike.png
+    - assets/images/bus.png
+    - assets/images/car.png
+    - assets/images/lorry.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
