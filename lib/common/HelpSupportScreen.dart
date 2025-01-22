@@ -5,7 +5,7 @@ class HelpSupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF46C2AF), // Consistent color
+        backgroundColor: Color(0xFFE5F7F1), // Consistent color
         centerTitle: true,
         elevation: 0,
       ),

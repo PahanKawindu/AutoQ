@@ -4,7 +4,7 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Define the color to be used for both the appbar and body
-    Color primaryColor = Color(0xFF46C2AF);
+    Color primaryColor = Color(0xFFE5F7F1);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,7 +20,7 @@ class AboutUsScreen extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundColor: primaryColor, // Set the same background color here
+                backgroundColor: Color(0xFF46C2AF), // Set the same background color here
                 child: Text(
                   'AutoQ',
                   style: TextStyle(

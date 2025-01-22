@@ -37,8 +37,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Profile', style: TextStyle(fontSize: 20)),
-        backgroundColor: Color(0xFF46C2AF),
+        backgroundColor: Color(0xFFE5F7F1),
       ),
       body: _userInfo == null
           ? Center(child: CircularProgressIndicator())

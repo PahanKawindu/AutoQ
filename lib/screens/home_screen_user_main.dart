@@ -143,8 +143,16 @@ class _HomeScreenState extends State<HomeScreenUser> {
         ),
         body: Stack(
           children: [
-            // Conditionally load either the Home Body or Service History
-            _selectedIndex == 0 ? UserHomeBody() : UserServiceHistory(),
+            // Add SizedBox with height 30 at the top and bottom of the body
+            Column(
+              children: [
+                SizedBox(height: 30),  // Space at the top
+                Expanded(
+                  child: _selectedIndex == 0 ? UserHomeBody() : UserServiceHistory(),
+                ),
+                SizedBox(height: 30),  // Space at the bottom
+              ],
+            ),
             // Slide Bar (Top Sliding Menu)
             if (_isSlideBarOpen)
               Positioned(

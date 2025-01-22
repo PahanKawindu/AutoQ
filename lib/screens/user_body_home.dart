@@ -203,7 +203,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                   children: [
                     _buildAdditionalCard(
                       context,
-                      title: 'Reserve Your Spot',
+                      title: 'Reserve Your Spott',
                       description: 'Book your service appointment today.',
                       assetPath: 'assets/images/reserve.svg',
                       backgroundColor: Colors.white, // Pure white,
