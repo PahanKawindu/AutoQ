@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart'; // Import for Firebase Messaging
 import 'package:test_flutter1/screens/home_screen_admin_main.dart';
 import '../screens/home_screen_user_main.dart'; // Import user screen
 
@@ -45,6 +46,18 @@ class LoginController {
 
         // Extract user role
         String userRole = userDoc['user_role'];
+        String? dbToken = userDoc['device_token'];
+
+        // Retrieve the current Firebase Messaging token
+        String? currentToken = await FirebaseMessaging.instance.getToken();
+
+        // Update the token in Firestore if it differs from the current one
+        if (currentToken != null && currentToken != dbToken) {
+          await _firestore.collection('users').doc(value.user!.uid).update({
+            'device_token': currentToken,
+          });
+          //debugPrint('Updated device token in Firestore.');
+        }
 
         // Save session-related information (example: user ID and role)
         SharedPreferences prefs = await SharedPreferences.getInstance();

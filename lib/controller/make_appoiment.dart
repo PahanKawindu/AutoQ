@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_flutter1/controller/Helper_models/appointments.dart';
+import 'package:test_flutter1/screens/main_features_screens/check_queue.dart';
 
 class MakeAppointment extends StatefulWidget {
   @override
@@ -139,11 +140,15 @@ class _MakeAppointmentState extends State<MakeAppointment> {
         SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            //Navigator.of(context).pushReplacementNamed('/home');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CheckQueue()),
+            );
           },
-          child: Text('Home'),
+          child: Text('Check Queue'),
           style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF34A0A4)),
         ),
+
       ],
     );
   }

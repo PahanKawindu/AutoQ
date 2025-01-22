@@ -14,7 +14,8 @@ class SelectDate extends StatefulWidget {
 }
 
 class _SelectDateState extends State<SelectDate> {
-  final AppointmentLimitsService _appointmentLimitsService = AppointmentLimitsService();
+  final AppointmentLimitsService _appointmentLimitsService =
+  AppointmentLimitsService();
   final AppointmentsService _appointmentsService = AppointmentsService();
   final QueueService _queueService = QueueService();
 
@@ -35,7 +36,8 @@ class _SelectDateState extends State<SelectDate> {
 
   // Fetch the number of appointments already booked for the selected date
   Future<void> _fetchAndLogAppointmentsCount() async {
-    int appointmentsCount = await _appointmentsService.getAppointmentsCount(_selectedDate);
+    int appointmentsCount =
+    await _appointmentsService.getAppointmentsCount(_selectedDate);
     setState(() {
       _appointmentsCount = appointmentsCount;
 
@@ -60,7 +62,8 @@ class _SelectDateState extends State<SelectDate> {
   // Save selected date, next queue number, and estimated queue time to shared preferences
   Future<void> _saveSelectedDateAndQueueDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('selectedDate', DateFormat('yyyy-MM-dd').format(_selectedDate));
+    prefs.setString(
+        'selectedDate', DateFormat('yyyy-MM-dd').format(_selectedDate));
     if (_nextQueueNumber != null) {
       prefs.setInt('selectedQueueNumber', _nextQueueNumber!);
     }
@@ -104,7 +107,10 @@ class _SelectDateState extends State<SelectDate> {
           children: [
             Text(
               'Select Date',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 24, // Increased font size
+                fontWeight: FontWeight.bold, // Bold for emphasis
+              ),
             ),
             SizedBox(height: 20),
             TableCalendar(
@@ -123,17 +129,32 @@ class _SelectDateState extends State<SelectDate> {
             ),
             SizedBox(height: 20),
             if (_isAppointmentAvailable) ...[
-              // Display next queue number and estimated time if appointments are available
               if (_nextQueueNumber != null && _estimatedQueueTime != null) ...[
-                Text('Next Queue Number: $_nextQueueNumber'),
+                Text(
+                  'Next Queue Number: $_nextQueueNumber',
+                  style: TextStyle(
+                    fontSize: 18, // Increased font size
+                    fontWeight: FontWeight.w500, // Medium weight
+                  ),
+                ),
                 SizedBox(height: 10),
-                Text('Estimated Queue Time: $_estimatedQueueTime'),
+                Text(
+                  'Estimated Queue Time: $_estimatedQueueTime',
+                  style: TextStyle(
+                    fontSize: 14, // Increased font size
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ] else ...[
-              // Display message if no appointments are available
               Text(
                 'Appointments for this date are already reserved.',
-                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 16, // Slightly smaller but readable
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
             SizedBox(height: 20),
@@ -147,7 +168,10 @@ class _SelectDateState extends State<SelectDate> {
                 );
               }
                   : null, // Disable button if no appointments are available
-              child: Text('Continue'),
+              child: Text(
+                'Continue',
+                style: TextStyle(fontSize: 16), // Larger button text
+              ),
             ),
           ],
         ),

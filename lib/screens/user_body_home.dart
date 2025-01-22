@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Import for SVG support
 import 'package:test_flutter1/common/AboutUsScreen.dart';
 import 'package:test_flutter1/screens/main_features_screens/check_queue.dart';
 import './main_features_screens/reserve_your_spot_A.dart';
@@ -255,7 +256,7 @@ class UserHomeBody extends StatelessWidget {
                   child: SvgPicture.asset(
                     svgPath,
                     height: 80,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

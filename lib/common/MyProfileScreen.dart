@@ -65,7 +65,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 16),
                   Text(
                     '${_userInfo?['first_name'] ?? ''} ${_userInfo?['last_name'] ?? ''}',
                     style: TextStyle(
@@ -93,12 +93,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     label: 'Contact No',
                     value: _userInfo?['contact_no'] ?? 'N/A',
                   ),
+                  
                   SizedBox(height: 8), // Space between items
                   _buildInfoCard(
                     icon: Icons.person_outline,
                     label: 'User Role',
                     value: _userInfo?['user_role'] ?? 'N/A',
                   ),
+                  
                   SizedBox(height: 8), // Space between items
                   _buildInfoCard(
                     icon: Icons.date_range,
