@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
         exit(0); // Terminates the app
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFE5E5E5),
+        backgroundColor: Color(0xFFE5F7F1), // Light transparent green background for body
         appBar: AppBar(
           title: const Text(
             'AutoQ',
@@ -83,7 +83,8 @@ class _HomeScreenState extends State<HomeScreenUser> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xFFE5E5E5),
+          backgroundColor: Colors.white, // Set the AppBar background color to white
+          elevation: 1, // Subtle shadow effect for a more professional look
           leading: Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: Container(
@@ -149,17 +150,19 @@ class _HomeScreenState extends State<HomeScreenUser> {
               Positioned(
                 top: 0,
                 left: 0,
-                right: 0,
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  height: 600, // Height of the sliding menu
+                  width: MediaQuery.of(context).size.width / 1.29, // Half of the screen width
+                  height: MediaQuery.of(context).size.height * 1,
                   color: Colors.black.withOpacity(0.6), // Background overlay
                   child: TopSlideBar(), // Your custom slide bar
                 ),
               ),
           ],
         ),
+
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white, // Set the bottom navigation bar background color to white
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -171,7 +174,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
+          selectedItemColor: Color(0xFF46C2AF),
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
