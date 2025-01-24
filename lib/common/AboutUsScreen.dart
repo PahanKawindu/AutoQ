@@ -61,7 +61,7 @@ class AboutUsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: primaryColor, // Use the same color
+                  color: Colors.black87// Use the same color
               ),
             ),
             SizedBox(height: 8),
@@ -77,7 +77,7 @@ class AboutUsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: primaryColor, // Use the same color
+                  color: Colors.black87 // Use the same color
               ),
             ),
             SizedBox(height: 8),
@@ -95,7 +95,7 @@ class AboutUsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: primaryColor, // Use the same color
+                color: Colors.black87, // Use the same color
               ),
             ),
             SizedBox(height: 8),
@@ -114,7 +114,7 @@ class AboutUsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: primaryColor, // Use the same color
+                color: Colors.black87, // Use the same color
               ),
             ),
             SizedBox(height: 8),
@@ -132,7 +132,7 @@ class AboutUsScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: primaryColor, // Use the same color
+                  color: Colors.black87, // Use the same color
                 ),
                 textAlign: TextAlign.center,
               ),

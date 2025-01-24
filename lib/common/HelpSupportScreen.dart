@@ -5,12 +5,12 @@ class HelpSupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFE5F7F1), // Consistent color
+        backgroundColor: Colors.white, // Consistent color
         centerTitle: true,
         elevation: 0,
       ),
       body: Container(
-        color: Color(0xFFF5F5F5), // Light grey background for a calm tone
+        color: Colors.white, // Light grey background for a calm tone
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
           child: Column(
@@ -104,7 +104,7 @@ class HelpSupportScreen extends StatelessWidget {
       style: TextStyle(
         fontSize: 20, // Adjusted for consistency
         fontWeight: FontWeight.bold,
-        color: Color(0xFF46C2AF), // Consistent color for section titles
+        color: Colors.black, // Consistent color for section titles
       ),
     );
   }

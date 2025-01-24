@@ -66,6 +66,18 @@ class _HomeScreenState extends State<HomeScreenUser> {
     );
   }
 
+  // Refresh function for pull-to-refresh
+  Future<void> _refreshContent() async {
+    // You can add custom logic to refresh your content here
+    // For example, re-fetch data from Firestore, SharedPreferences, or APIs.
+    // If you need to reload the data, you can call the necessary functions here.
+
+    await Future.delayed(Duration(seconds: 2)); // Simulate a network request
+
+    // After refreshing, update the UI state
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -146,11 +158,12 @@ class _HomeScreenState extends State<HomeScreenUser> {
             // Add SizedBox with height 30 at the top and bottom of the body
             Column(
               children: [
-                SizedBox(height: 30),  // Space at the top
                 Expanded(
-                  child: _selectedIndex == 0 ? UserHomeBody() : UserServiceHistory(),
+                  child: RefreshIndicator(
+                    onRefresh: _refreshContent, // Attach the refresh function
+                    child: _selectedIndex == 0 ? UserHomeBody() : UserServiceHistory(),
+                  ),
                 ),
-                SizedBox(height: 30),  // Space at the bottom
               ],
             ),
             // Slide Bar (Top Sliding Menu)

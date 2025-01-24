@@ -6,8 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ReserveYourSpotA extends StatefulWidget {
   final Map<String, dynamic> serviceDetails;
 
-  const ReserveYourSpotA({Key? key, required this.serviceDetails})
-      : super(key: key);
+  const ReserveYourSpotA({Key? key, required this.serviceDetails}) : super(key: key);
 
   @override
   _ReserveYourSpotAState createState() => _ReserveYourSpotAState();
@@ -15,7 +14,7 @@ class ReserveYourSpotA extends StatefulWidget {
 
 class _ReserveYourSpotAState extends State<ReserveYourSpotA> {
   bool isAlreadyBooked = false;
-  bool isLoading = true; // Flag to indicate loading status
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -23,26 +22,19 @@ class _ReserveYourSpotAState extends State<ReserveYourSpotA> {
     checkReservationStatus();
   }
 
-  // Method to check if the user has already booked a reservation
   Future<void> checkReservationStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString('uid');
 
     if (uid != null) {
-      // Simulating a wait time before checking the status
       await Future.delayed(Duration(seconds: 3));
-
-      // Fetch all appointments for the user
       QuerySnapshot appointmentSnapshot = await FirebaseFirestore.instance
           .collection('appointments')
           .where('uid', isEqualTo: uid)
           .get();
 
-      // Check if the user has any active or waiting appointment
       for (var doc in appointmentSnapshot.docs) {
         String appointmentId = doc['appointmentId'];
-
-        // Check queue collection for this appointmentId
         QuerySnapshot queueSnapshot = await FirebaseFirestore.instance
             .collection('queue')
             .where('appointmentId', isEqualTo: appointmentId)
@@ -58,23 +50,17 @@ class _ReserveYourSpotAState extends State<ReserveYourSpotA> {
       }
     }
 
-    // Set the loading flag to false after the operation completes
     setState(() {
       isLoading = false;
     });
   }
 
-  // Method to save data to SharedPreferences
   Future<void> saveDataAndPrepareForSelectDate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedVehicle', widget.serviceDetails['VehicleType']);
     await prefs.setInt('selectedPackage', widget.serviceDetails['ServceID']);
-
-    // Triggering the state update to display SelectDate content
-    setState(() {});
   }
 
-  // Method to remove saved data from SharedPreferences
   Future<void> removeSavedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('selectedVehicle');
@@ -85,33 +71,72 @@ class _ReserveYourSpotAState extends State<ReserveYourSpotA> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Remove saved data when back button is pressed
         await removeSavedData();
-        return true; // Allow the back navigation
+        return true;
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Reserve Your Spot'),
-        ),
         body: isLoading
-            ? Center(child: CircularProgressIndicator()) // Show loading indicator
+            ? Center(child: CircularProgressIndicator())
             : isAlreadyBooked
-            ? Center(
-          child: AlertDialog(
-            title: Text('Reservation Already Booked'),
-            content: Text(
-                'You have already booked a reservation. Please check your appointment details or try again later.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        )
+            ? _buildStyledAlertDialog(context)
             : SelectDate(),
+      ),
+    );
+  }
+
+  Widget _buildStyledAlertDialog(BuildContext context) {
+    return Center(
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          side: BorderSide(color: Colors.red, width: 1.5),
+        ),
+        backgroundColor: Colors.pink.shade50,
+        title: Column(
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 48.0,
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              'Reservation Already Booked',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          'You have already booked a reservation. Please check your appointment details or try again later.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 14.0),
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

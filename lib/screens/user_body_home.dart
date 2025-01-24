@@ -1,5 +1,4 @@
 import 'dart:async'; // For Timer
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -30,7 +29,6 @@ class _UserHomeBodyState extends State<UserHomeBody> {
   @override
   void initState() {
     super.initState();
-    _startAutoSlide();
   }
 
   @override
@@ -41,13 +39,10 @@ class _UserHomeBodyState extends State<UserHomeBody> {
   }
 
   // Auto-slide functionality
-  void _startAutoSlide() {
+  void _startAutoSlide(int totalPages) {
     _sliderTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (_pageController.hasClients) {
-        int nextPage = _pageController.page!.toInt() + 1;
-        if (nextPage >= 3) {
-          nextPage = 0; // Go back to the first page after the last
-        }
+        int nextPage = (_pageController.page!.toInt() + 1) % totalPages;
         _pageController.animateToPage(
           nextPage,
           duration: const Duration(milliseconds: 500),
@@ -71,12 +66,17 @@ class _UserHomeBodyState extends State<UserHomeBody> {
         }
 
         final services = snapshot.data!;
+        // Start the auto-slide once we have the data
+        if (_sliderTimer == null) {
+          _startAutoSlide(services.length);
+        }
+
         return SingleChildScrollView(
           child: Column(
             children: [
               // Card section at the top
               SizedBox(
-                height: 200, // Fixed height for the card area
+                height: 210, // Fixed height for the card area
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: services.length,
@@ -100,8 +100,18 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           elevation: 5,
-                          color:Color(0xFF98D8EF),
                           child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xFF98D8EF), // Light blue
+                                  Color(0xFF0077FF), // Darker blue
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
                               children: [
@@ -109,39 +119,38 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                                 Expanded(
                                   flex: 2,
                                   child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         service['ServicePackgeName'] ?? 'Service Name',
                                         style: const TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 21,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: 15.0),
                                       Text(
-                                        'Approx Service Time: ${service['ApproxServiceTime'] ?? 'N/A'}',
-                                        style: const TextStyle(
+                                        'Approx Time : ${service['ApproxServiceTime'] ?? 'N/A'}',
+                                        style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.grey,
+                                          color: Colors.black54,
                                         ),
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: 3.0),
                                       Text(
-                                        'Price: ${service['Price']}',
-                                        style: const TextStyle(
+                                        'Vehicle Type : ${service['VehicleType']}',
+                                        style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.grey,
+                                          color: Colors.black54,
                                         ),
                                       ),
-                                      const SizedBox(height: 8.0),
+                                      const SizedBox(height: 3.0),
                                       Text(
-                                        'Vehicle Type: ${service['VehicleType']}',
-                                        style: const TextStyle(
+                                        'Price      : Rs.${service['Price']}',
+                                        style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.grey,
+                                          color: Colors.black54,
                                         ),
                                       ),
                                     ],
@@ -152,11 +161,13 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                                   flex: 1,
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.network(
-                                      service['ServiceImage'] ??
-                                          'https://placehold.co/600x400.png',
-                                      height: 120,
-                                      fit: BoxFit.cover,
+                                    child: Container(
+                                      margin: EdgeInsets.all(8.0),
+                                      child: Image.network(
+                                        service['ServiceImage'] ?? 'https://placehold.co/600x400.png',
+                                        height: 120,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -189,9 +200,9 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                   "Your Vehicle, Our Priority! Reserve Your Spot Now.",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1B1B1B), // Matte black
+                    color: Color(0xFF1B1B1B),
                   ),
                 ),
               ),
@@ -203,10 +214,10 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                   children: [
                     _buildAdditionalCard(
                       context,
-                      title: 'Reserve Your Spott',
+                      title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
                       assetPath: 'assets/images/reserve.svg',
-                      backgroundColor: Colors.white, // Pure white,
+                      backgroundColor: Colors.white,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -220,10 +231,9 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                     _buildAdditionalCard(
                       context,
                       title: 'Check the Queue',
-                      description:
-                      'Stay updated on your service progress in real-time.',
+                      description: 'Stay updated on your service progress in real-time.',
                       assetPath: 'assets/images/check.svg',
-                      backgroundColor: Colors.white, // Pure white,
+                      backgroundColor: Colors.white,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -239,7 +249,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
                       assetPath: 'assets/images/about.svg',
-                      backgroundColor: Colors.white, // Pure white,
+                      backgroundColor: Colors.white,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -249,6 +259,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                         );
                       },
                     ),
+                    const SizedBox(height: 23),
                   ],
                 ),
               ),
@@ -316,8 +327,8 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                     alignment: Alignment.centerRight,
                     child: SvgPicture.asset(
                       assetPath,
-                      height: 80,
-                      fit: BoxFit.cover,
+                      height: 64,
+                      width: 64,
                     ),
                   ),
                 ),

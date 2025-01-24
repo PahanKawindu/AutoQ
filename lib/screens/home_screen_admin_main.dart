@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
         exit(0); // Terminates the app
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFE5E5E5),
+        backgroundColor: Color(0xFFE5F7F1),
         appBar: AppBar(
           title: const Text(
             'AutoQ',
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
+          selectedItemColor: Color(0xFF46C2AF),
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
