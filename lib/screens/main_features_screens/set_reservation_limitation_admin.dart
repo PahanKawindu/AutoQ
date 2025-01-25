@@ -18,16 +18,12 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
   // Firestore collection reference
   final CollectionReference appointmentLimits = FirebaseFirestore.instance.collection('appointment_limits');
 
-  // Create a TableCalendar controller
-  late final ValueNotifier<List<DateTime>> _selectedEvents;
-
   // List of dates with existing limitations
   List<DateTime> limitedDates = [];
 
   @override
   void initState() {
     super.initState();
-    _selectedEvents = ValueNotifier([]);
     _loadExistingLimits();
   }
 
@@ -55,7 +51,8 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
 
   @override
   void dispose() {
-    _selectedEvents.dispose();
+    limitController.dispose();
+    reasonController.dispose();
     super.dispose();
   }
 
@@ -63,16 +60,43 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set Reservation Limit'),
-        backgroundColor: const Color(0xFF46C2AF),
+        backgroundColor: const Color(0xFFE5F7F1),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : Padding(
+          : SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Calendar directly displayed
+            // Heading Section
+            Align(
+              alignment: Alignment.centerLeft, // Align text to the left
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // Ensure both texts are left-aligned
+                children: [
+                  Text(
+                    'Set Reservation Limitation',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Manage reservation capacities with ease.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24), // Spacing between the heading and calendar
+
+            // Calendar
             TableCalendar(
               focusedDay: DateTime.now(),
               firstDay: DateTime.now(),
@@ -83,7 +107,6 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
                     selectedDate = selectedDay;
                   });
                 } else {
-                  // If the user selects today or a past date
                   setState(() {
                     errorMessage = 'You cannot select today or past dates.';
                     selectedDate = null;
@@ -96,7 +119,6 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
               onPageChanged: (focusedDay) {},
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, date, events) {
-                  // Highlight days with existing limitations
                   if (limitedDates.contains(DateTime(date.year, date.month, date.day))) {
                     return Positioned(
                       right: 1,
@@ -117,21 +139,18 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
             ),
             SizedBox(height: 20),
 
-            // Description below the calendar
             if (limitedDates.isNotEmpty) ...[
               Text(
                 'Dates with red circles indicate reservation limitations are set.',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.redAccent, // Light red color
+                  color: Colors.redAccent,
                   fontWeight: FontWeight.w500,
                 ),
-                textAlign: TextAlign.center, // Center the text
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
             ],
-
-            // Display limit and reason input fields after selecting a valid date
             if (selectedDate != null) ...[
               TextField(
                 controller: limitController,
@@ -143,13 +162,28 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
                 decoration: InputDecoration(labelText: 'Enter reason'),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveLimitation,
-                child: Text('Confirm'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF46C2AF),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _saveLimitation,
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF46C2AF),
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    elevation: 3,
+                  ),
                 ),
               ),
+
               if (errorMessage != null) ...[
                 SizedBox(height: 10),
                 Text(
@@ -190,49 +224,64 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
         errorMessage = null;
       });
 
-      // Convert selected date to timestamp
       final timestamp = Timestamp.fromDate(selectedDate!);
 
-      // Check if a limitation already exists for the selected date
-      final existingDoc = await appointmentLimits.doc(timestamp.toDate().toString()).get();
+      await appointmentLimits.add({
+        'date': timestamp,
+        'limit': limit,
+        'message': reasonText,
+      });
 
-      if (existingDoc.exists) {
-        // If the document exists, update it
-        await appointmentLimits.doc(existingDoc.id).update({
-          'limit': limit,
-          'message': reasonText,
-        });
-      } else {
-        // If no document exists, create a new one
-        await appointmentLimits.add({
-          'date': timestamp,
-          'limit': limit,
-          'message': reasonText,
-        });
-      }
-
-      // Add the date to the list of limited dates to highlight it
       setState(() {
         limitedDates.add(DateTime(selectedDate!.year, selectedDate!.month, selectedDate!.day));
         isLoading = false;
+        selectedDate = null;
+        limitController.clear();
+        reasonController.clear();
       });
 
-      // Show success message and refresh the screen
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Success'),
-          content: Text('Reservation limit set successfully!'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          backgroundColor: Colors.white,
+          title: Row(
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Color(0xFF46C2AF),
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Success',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            'Reservation limit set successfully!',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black54,
+            ),
+          ),
           actions: [
             TextButton(
-              onPressed: () {
-                setState(() {
-                  selectedDate = null;
-                  limitController.clear();
-                  reasonController.clear();
-                });
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
+              style: TextButton.styleFrom(
+                foregroundColor: Color(0xFF46C2AF),
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               child: Text('OK'),
             ),
           ],
