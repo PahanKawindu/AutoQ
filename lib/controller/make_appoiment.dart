@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_flutter1/controller/Helper_models/appointments.dart';
 
+import '../screens/home_screen_user_main.dart';
+
 class MakeAppointment extends StatefulWidget {
   @override
   _MakeAppointmentState createState() => _MakeAppointmentState();
@@ -97,8 +99,8 @@ class _MakeAppointmentState extends State<MakeAppointment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Make Appointment'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFFE5F7F1),
+        elevation: 0, // Removing shadow for cleaner look
       ),
       body: Center(
         child: _isLoading
@@ -121,28 +123,69 @@ class _MakeAppointmentState extends State<MakeAppointment> {
   Widget _buildAppointmentSuccess() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        // Appointment success title
         Text(
           'Appointment Success!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
+          style: TextStyle(
+            fontSize: 26, // Larger font size for prominence
+            fontWeight: FontWeight.bold,
+            color: Colors.green, // Darker green for readability
+          ),
         ),
         SizedBox(height: 20),
+
+        // Details header
         Text(
           'Details:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.green, // Slightly lighter green
+          ),
         ),
         SizedBox(height: 10),
-        Text('Vehicle: ${_appointmentDetails!['vehicleType']}'),
-        Text('Registration: ${_appointmentDetails!['vehicleRegNo']}'),
-        Text('Date: ${_appointmentDetails!['appointmentDate']}'),
-        Text('Queue No: ${_appointmentDetails!['positionNo']}'),
+
+        // Appointment details display
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Vehicle: ${_appointmentDetails!['vehicleType']}'),
+              Text('Registration: ${_appointmentDetails!['vehicleRegNo']}'),
+              Text('Date: ${_appointmentDetails!['appointmentDate']}'),
+              Text('Queue No: ${_appointmentDetails!['positionNo']}'),
+            ],
+          ),
+        ),
         SizedBox(height: 20),
+
+        // Home button with style
         ElevatedButton(
           onPressed: () {
-            //Navigator.of(context).pushReplacementNamed('/home');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreenUser(), // Navigate to HomeScreen
+              ),
+            );
           },
-          child: Text('Home'),
-          style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF34A0A4)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+            child: Text(
+              'Home',
+              style: TextStyle(fontSize: 18,color: Colors.white),
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFF34A0A4), // Color for the button
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8), // Rounded corners
+            ),
+            textStyle: TextStyle(fontSize: 18),
+          ),
         ),
       ],
     );

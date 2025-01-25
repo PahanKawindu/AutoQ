@@ -25,7 +25,7 @@ class ContentTop extends StatelessWidget {
               Text(
                 'Current Queue',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -35,9 +35,8 @@ class ContentTop extends StatelessWidget {
                 ? Text(
               'No any reservation yet. You are the first one!',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
               ),
             )
                 : Container(
@@ -49,7 +48,7 @@ class ContentTop extends StatelessWidget {
               child: Text(
                 '$currentServicingPosition/$totalPositionsToday',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -65,7 +64,7 @@ class ContentTop extends StatelessWidget {
             child: Text(
               'Your Position: $userPosition',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),

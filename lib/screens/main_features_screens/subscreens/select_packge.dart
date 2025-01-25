@@ -60,83 +60,142 @@ class _SelectPackageState extends State<SelectPackage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Select Package'),
-          backgroundColor: Color(0xFF34A0A4),
+          backgroundColor: Color(0xFFE5F7F1),
         ),
-        body: selectedVehicle == null
-            ? Center(child: Text('No vehicle selected'))
-            : packages.isEmpty
-            ? Center(child: Text('No packages available for the selected vehicle', style: TextStyle(fontSize: 16, color: Colors.red)))
-            : ListView.builder(
-          itemCount: packages.length,
-          itemBuilder: (context, index) {
-            final package = packages[index];
-            return GestureDetector(
-              onTap: () async {
-                await savePackageId(package['ServceID']);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SelectDate(),
-                  ),
-                );
-              },
-              child: Card(
-                margin: EdgeInsets.all(16.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              package['ServicePackgeName'] ?? 'Package Name',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Approx Time: ${package['ApproxServiceTime'] ?? 'N/A'}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Price: ${package['Price']}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
+        body: Container(
+          color: Colors.white, // Set body background color to white
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title Section
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Main Title
+                    Text(
+                      'Select your service package',
+                      style: TextStyle(
+                        fontSize: 20, // Font size adjusted to match your requested style
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Image.network(
-                          package['ServiceImage'] ??
-                              'https://placehold.co/100x100.png',
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
+                    ),
+                    SizedBox(height: 10),
+                    // Subtitle (Slogan)
+                    Text(
+                      'Choose a service package to proceed with your booking.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
                 ),
               ),
-            );
-          },
+              // Check if vehicle is selected
+              if (selectedVehicle == null)
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'No vehicle selected',
+                      style: TextStyle(fontSize: 16, color: Colors.red),
+                    ),
+                  ),
+                )
+              else if (packages.isEmpty)
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'No packages available for the selected vehicle',
+                      style: TextStyle(fontSize: 16, color: Colors.red),
+                    ),
+                  ),
+                )
+              else
+              // Package Cards
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: packages.length,
+                    itemBuilder: (context, index) {
+                      final package = packages[index];
+                      return GestureDetector(
+                        onTap: () async {
+                          await savePackageId(package['ServceID']);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SelectDate(),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          elevation: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        package['ServicePackgeName'] ??
+                                            'Package Name',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        'Approx Time: ${package['ApproxServiceTime'] ?? 'N/A'}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        'Price: ${package['Price']}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Image.network(
+                                    package['ServiceImage'] ??
+                                        'https://placehold.co/100x100.png',
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

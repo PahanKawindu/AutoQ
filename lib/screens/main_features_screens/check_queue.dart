@@ -30,8 +30,7 @@ class _CheckQueueState extends State<CheckQueue> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Check Queue'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFFE5F7F1),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshQueueData,

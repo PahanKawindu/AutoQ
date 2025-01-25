@@ -42,8 +42,7 @@ class _PaymentSuccessfulState extends State<PaymentSuccessful> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment Successful'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFFE5F7F1),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
