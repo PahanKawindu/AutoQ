@@ -123,15 +123,15 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
                         // Contact Info
                         Row(
                           children: [
-                            Icon(Icons.email,
-                                color: Colors.teal, size: 20),
+                            Icon(Icons.call,
+                                color: Colors.teal, size: 16),
                             SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                queueItem['contact_no'],
+                                'Contact Info   :     ${queueItem['contact_no']}',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black),
+                                    fontSize: 14,
+                                    color: Colors.black54),
                               ),
                             ),
                           ],
@@ -146,10 +146,10 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
                             SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                'Vehicle Type: ${queueItem['VehicleType']}',
+                                'Vehicle Type  :     ${queueItem['VehicleType']}',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black),
+                                    fontSize: 14,
+                                    color: Colors.black54),
                               ),
                             ),
                           ],
@@ -159,14 +159,14 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
                         Row(
                           children: [
                             Icon(Icons.confirmation_number,
-                                color: Colors.teal, size: 20),
+                                color: Colors.teal, size: 16),
                             SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                'Reg No: ${queueItem['vehicleRegNo']}',
+                                'Reg No           :     ${queueItem['vehicleRegNo']}',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black),
+                                    fontSize: 14,
+                                    color: Colors.black54),
                               ),
                             ),
                           ],
@@ -176,14 +176,14 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
                         Row(
                           children: [
                             Icon(Icons.chair,
-                                color: Colors.teal, size: 20),
+                                color: Colors.teal, size: 16),
                             SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                'Position No: ${queueItem['positionNo']}',
+                                'Position No    :     ${queueItem['positionNo']}',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black),
+                                    fontSize: 14,
+                                    color: Colors.black54),
                               ),
                             ),
                           ],
@@ -198,14 +198,14 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
                             Row(
                               children: [
                                 Icon(Icons.info,
-                                    color: statusColor, size: 18),
+                                    color: statusColor, size: 22),
                                 SizedBox(width: 8),
                                 Text(
                                   'Status: ${queueItem['status']}',
                                   style: TextStyle(
                                     color: statusColor,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16,
+                                    fontSize: 17,
                                   ),
                                 ),
                               ],

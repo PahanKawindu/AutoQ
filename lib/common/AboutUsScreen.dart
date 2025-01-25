@@ -36,7 +36,7 @@ class AboutUsScreen extends StatelessWidget {
             // Welcome Text
             Center(
               child: Text(
-                'Welcome to AutoQ!',
+                ' Welcome to AutoQ!',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
