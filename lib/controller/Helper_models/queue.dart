@@ -345,7 +345,6 @@ class QueueService {
         String uid = appointmentDoc['uid'];
         DocumentSnapshot userDoc =
             await _firestore.collection('users').doc(uid).get();
-
         todayQueue.add({
           'first_name': userDoc['first_name'],
           'last_name': userDoc['last_name'],

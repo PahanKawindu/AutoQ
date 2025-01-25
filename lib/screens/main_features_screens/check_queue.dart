@@ -3,6 +3,7 @@ import 'package:test_flutter1/controller/Helper_models/queue.dart';
 import 'package:test_flutter1/screens/main_features_screens/subscreens/check_queue_content/content_bottom.dart';
 import 'package:test_flutter1/screens/main_features_screens/subscreens/check_queue_content/content_middle.dart';
 import 'package:test_flutter1/screens/main_features_screens/subscreens/check_queue_content/content_top.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CheckQueue extends StatefulWidget {
   @override
@@ -17,6 +18,15 @@ class _CheckQueueState extends State<CheckQueue> {
   void initState() {
     super.initState();
     queueData = queueService.getTodayQueueInfo();
+
+    // Listen for changes in the 'queue' collection
+    FirebaseFirestore.instance
+        .collection('queue')
+        .snapshots()
+        .listen((snapshot) {
+      // Trigger a refresh when there's a change in the 'queue' collection
+      _refreshQueueData();
+    });
   }
 
   Future<void> _refreshQueueData() async {
