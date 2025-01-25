@@ -129,15 +129,20 @@ class _SelectDateState extends State<SelectDate> {
                 focusedDay: _selectedDate,
                 selectedDayPredicate: (day) => isSameDay(_selectedDate, day),
                 onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDate = selectedDay;
-                  });
-                  _fetchAndLogLimit();
-                  _fetchAndLogAppointmentsCount();
-                  _fetchAndLogNextQueueAndTime();
+                  if (selectedDay.isAfter(DateTime.now().subtract(Duration(days: 1)))) {
+                    setState(() {
+                      _selectedDate = selectedDay;
+                    });
+                    _fetchAndLogLimit();
+                    _fetchAndLogAppointmentsCount();
+                    _fetchAndLogNextQueueAndTime();
+                  }
                 },
-                firstDay: DateTime(2025),
+                firstDay: DateTime.now(),
                 lastDay: DateTime(2030),
+                enabledDayPredicate: (day) {
+                  return day.isAfter(DateTime.now().subtract(Duration(days: 1)));
+                },
               ),
               SizedBox(height: 20),
               // Appointment Availability
