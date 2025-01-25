@@ -8,9 +8,30 @@ import 'login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
+  Future<void> checkSession(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userRole = prefs.getString('userRole');
+    String? uid = prefs.getString('uid');
+
+    if (uid != null) {
+      // Redirect based on user role
+      if (userRole == 'admin') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreenAdmin()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreenUser()),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => checkSession(context));
     return Scaffold(
       backgroundColor: const Color(0xFF46C2AF), // Teal background color
       body: Column(
