@@ -4,7 +4,6 @@ import 'dart:io';
 import 'admin_body_home.dart';
 import 'admin_body_settings.dart';
 
-
 class HomeScreenAdmin extends StatefulWidget {
   @override
   State<HomeScreenAdmin> createState() => _HomeScreenState();
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xFFE5E5E5),
+          backgroundColor: Colors.white,
           leading: Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: Container(
@@ -67,15 +66,6 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
                   shape: BoxShape.circle,
                   color: Color.fromRGBO(169, 169, 169, 0.3),
                 ),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.notifications,
-                    color: Colors.black54,
-                  ),
-                  onPressed: () {
-                    print('Notification icon pressed');
-                  },
-                ),
               ),
             ),
           ],
@@ -89,10 +79,10 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
               Positioned(
                 top: 0,
                 left: 0,
-                right: 0,
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  height: 600, // Height of the sliding menu
+                  width: MediaQuery.of(context).size.width / 1.29, // Set the width to match the HomeScreenUser
+                  height: MediaQuery.of(context).size.height * 1, // Full screen height for the slide bar
                   color: Colors.black.withOpacity(0.6), // Background overlay
                   child: TopSlideBarAdmin(), // Your custom slide bar
                 ),

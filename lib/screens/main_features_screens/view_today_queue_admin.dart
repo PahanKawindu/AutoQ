@@ -31,89 +31,232 @@ class _ViewTodayQueueAdminState extends State<ViewTodayQueueAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Today Queue'),
-        backgroundColor: const Color(0xFF46C2AF),
+        backgroundColor: const Color(0xFFE5F7F1),
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : _todayQueue.isEmpty
-          ? Center(child: Text('No Reservation for today'))
-          : ListView.builder(
-        itemCount: _todayQueue.length,
-        itemBuilder: (context, index) {
-          var queueItem = _todayQueue[index];
-
-          // Card color logic based on status
-          Color cardColor;
-          if (queueItem['status'] == 'completed') {
-            cardColor = Colors.green;
-          } else if (queueItem['status'] == 'canceled') {
-            cardColor = Colors.red;
-          } else {
-            cardColor = Colors.white;
-          }
-
-          return Card(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            color: cardColor,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Reg No: ${queueItem['vehicleRegNo']}'),
-                      Text('Type: ${queueItem['VehicleType']}'),
-                      Text('Position No: ${queueItem['positionNo']}'),
-                    ],
+          : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Heading and Slogan
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome to Today\'s Queue',
+                  style: TextStyle(
+                    fontSize: 20, // Heading font size
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black, // Heading color
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Owner: ${queueItem['first_name']} ${queueItem['last_name']}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text('Contact: ${queueItem['contact_no']}'),
-                    ],
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Manage and track your reservations effortlessly.',
+                  style: TextStyle(
+                    fontSize: 16, // Slogan font size
+                    color: Colors.black54, // Slogan color
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Text('Status: ${queueItem['status']}'),
-                      SizedBox(width: 10),
-                      if (queueItem['status'] != 'completed' &&
-                          queueItem['status'] != 'canceled')
-                        ElevatedButton(
-                          onPressed: () async {
-                            // Navigate to UpdateQueueStatusAdmin screen and wait for result
-                            bool? result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    UpdateQueueStatusAdmin(
-                                      queueData: queueItem,
-                                    ),
-                              ),
-                            );
-
-                            // If result is true, refresh the queue data
-                            if (result != null && result) {
-                              _fetchTodayQueue(); // Refresh the data
-                            }
-                          },
-                          child: Text('Update Status'),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+          // Queue List
+          Expanded(
+            child: _todayQueue.isEmpty
+                ? Center(
+              child: Text(
+                'No Reservation for today',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            )
+                : ListView.builder(
+              itemCount: _todayQueue.length,
+              itemBuilder: (context, index) {
+                var queueItem = _todayQueue[index];
+
+                // Dynamic status color
+                Color statusColor;
+                if (queueItem['status'] == 'completed') {
+                  statusColor = Colors.green;
+                } else if (queueItem['status'] == 'canceled') {
+                  statusColor = Colors.red;
+                } else {
+                  statusColor = Colors.orange;
+                }
+
+                return Card(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Owner Name and Appointment Icon
+                        Row(
+                          children: [
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                '${queueItem['first_name']} ${queueItem['last_name']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+
+                        // Contact Info
+                        Row(
+                          children: [
+                            Icon(Icons.email,
+                                color: Colors.teal, size: 20),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                queueItem['contact_no'],
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+
+                        // Vehicle Details
+                        Row(
+                          children: [
+                            Icon(Icons.directions_car,
+                                color: Colors.teal, size: 20),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Vehicle Type: ${queueItem['VehicleType']}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+
+                        Row(
+                          children: [
+                            Icon(Icons.confirmation_number,
+                                color: Colors.teal, size: 20),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Reg No: ${queueItem['vehicleRegNo']}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+
+                        Row(
+                          children: [
+                            Icon(Icons.chair,
+                                color: Colors.teal, size: 20),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Position No: ${queueItem['positionNo']}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+
+                        // Status and Button
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.info,
+                                    color: statusColor, size: 18),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Status: ${queueItem['status']}',
+                                  style: TextStyle(
+                                    color: statusColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (queueItem['status'] !=
+                                'completed' &&
+                                queueItem['status'] != 'canceled')
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.teal,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  // Navigate to UpdateQueueStatusAdmin screen
+                                  bool? result =
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateQueueStatusAdmin(
+                                            queueData: queueItem,
+                                          ),
+                                    ),
+                                  );
+
+                                  // Refresh data if status is updated
+                                  if (result != null && result) {
+                                    _fetchTodayQueue();
+                                  }
+                                },
+                                child: Text(
+                                  'Update Status',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
