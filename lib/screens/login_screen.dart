@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isPasswordVisible = false; // Boolean to track password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +62,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Add 2 tab spaces before the cancel button
-                      const SizedBox(width: 48.0), // 2 tab spaces (each tab is 24px)
                       GestureDetector(
                         onTap: () {
                           Navigator.pushReplacement(
@@ -85,12 +84,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: 'Email',
                       ),
                       const SizedBox(height: 16.0),
-                      Common_widget.buildTextFormField(
+                      TextFormField(
                         controller: passwordController,
-                        prefixIcon: Icons.lock,
-                        labelText: 'Password',
-                        suffixIcon: Icons.visibility_off_outlined,
-                        obscureText: true,
+                        obscureText: !isPasswordVisible,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.lock),
+                          labelText: 'Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 26.0),
                       Center(

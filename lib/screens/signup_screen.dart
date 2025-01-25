@@ -19,22 +19,24 @@ class _SignupScreenState extends State<SignupScreen> {
   final lastNameController = TextEditingController();
   final contactNoController = TextEditingController();
 
+  bool isPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Resizes when keyboard appears
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFF46C2AF),
       appBar: AppBar(
         title: const Text('SIGN UP'),
         backgroundColor: const Color(0xFF46C2AF),
         centerTitle: true,
-        automaticallyImplyLeading: false, // This removes the back button
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 40), // Spacer instead of const Spacer(flex: 2)
+            const SizedBox(height: 40),
             const SizedBox(
               width: 350.0,
               child: Center(
@@ -59,7 +61,6 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Cancel button
                   GestureDetector(
                     onTap: () {
                       Navigator.pushReplacement(
@@ -100,12 +101,28 @@ class _SignupScreenState extends State<SignupScreen> {
                     labelText: 'Email',
                   ),
                   const SizedBox(height: 23.0),
-                  Common_widget.buildTextFormField(
+                  TextFormField(
                     controller: passwordController,
-                    prefixIcon: Icons.lock,
-                    labelText: 'Password',
-                    suffixIcon: Icons.visibility_off_outlined,
-                    obscureText: true,
+                    obscureText: !isPasswordVisible,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock),
+                      labelText: 'Password',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        },
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20.0),
                   Center(
