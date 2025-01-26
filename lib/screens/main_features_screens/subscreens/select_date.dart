@@ -148,11 +148,29 @@ class _SelectDateState extends State<SelectDate> {
               // Appointment Availability
               if (_isAppointmentAvailable) ...[
                 if (_nextQueueNumber != null && _estimatedQueueTime != null) ...[
-                  Text('Next Queue Number: $_nextQueueNumber'),
+                  Center(
+                    child: Text(
+                      'Next Queue Number: $_nextQueueNumber',
+                      style: TextStyle(
+                        fontSize: 18, // Increased font size
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Colors.blue, // Highlight color
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 10),
-                  Text('Estimated Queue Time: $_estimatedQueueTime'),
+                  Center(
+                    child: Text(
+                      'Estimated Queue Time: $_estimatedQueueTime',
+                      style: TextStyle(
+                        fontSize: 16, // Adjusted font size
+                        color: Colors.black87, // Regular color for contrast
+                      ),
+                    ),
+                  ),
                 ],
-              ] else ...[
+              ]
+              else ...[
                 Text(
                   'Appointments for this date are already reserved.',
                   style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),

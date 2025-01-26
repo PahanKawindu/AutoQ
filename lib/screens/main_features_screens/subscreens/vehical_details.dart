@@ -140,19 +140,62 @@ class _VehicleDetailsState extends State<VehicleDetails> {
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Appointment Made'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0), // Matches the rounded corners in your theme
+            side: BorderSide(
+              color: Color(0xFFFFA726), // Orange border color
+              width: 1.5, // Thin border width
+            ),
+          ),
+          backgroundColor: Color(0xFFFFF7E8), // Light yellow background color
+          titlePadding: EdgeInsets.zero, // Removes default padding
+          contentPadding: EdgeInsets.all(16),
+          title: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFFFF7E8), // White background for the title section
+              borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.info, color: Color(0xFFFFA726)), // Orange info icon
+                SizedBox(width: 8),
+                Text(
+                  'Notice',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF333333), // Dark gray text color
+                  ),
+                ),
+              ],
+            ),
+          ),
           content: Text(
-              'Your appointment has been successfully made. Please approve your appointment by making payment.'),
+            'The system has temporarily reserved your queue position. Please complete the payment promptly to confirm your appointment.',
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xFF333333), // Dark gray text color
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Color(0xFFFFA726), // Orange button text color
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
       );
+
     } catch (e) {
       print('Error creating waiting appointment: $e');
     }
