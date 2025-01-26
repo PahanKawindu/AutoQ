@@ -37,6 +37,40 @@ class _ContentMiddleState extends State<ContentMiddle> {
     );
   }
 
+  Widget _getStatusAnimation(String status) {
+    if (status == 'servicing') {
+      return AnimatedSwitcher(
+        duration: Duration(seconds: 1),
+        child: Image.asset(
+          'assets/videos/service.webm', // Your servicing animation
+          key: ValueKey('servicing'),
+          height: 60,
+        ),
+      );
+    } else if (status == 'waiting') {
+      return AnimatedSwitcher(
+        duration: Duration(seconds: 1),
+        child: Icon(
+          Icons.access_time, // You can use a waiting icon
+          key: ValueKey('waiting'),
+          size: 60,
+          color: Colors.orange,
+        ),
+      );
+    } else if (status == 'completed') {
+      return AnimatedSwitcher(
+        duration: Duration(seconds: 1),
+        child: Icon(
+          Icons.directions_car, // Car icon for completed status
+          key: ValueKey('completed'),
+          size: 60,
+          color: Colors.green,
+        ),
+      );
+    }
+    return Container(); // Default empty container if no status matches
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -93,9 +127,8 @@ class _ContentMiddleState extends State<ContentMiddle> {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-                            crossAxisAlignment:
-                            CrossAxisAlignment.center, // Center horizontally
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Stack(
                                 alignment: Alignment.center,
@@ -137,7 +170,7 @@ class _ContentMiddleState extends State<ContentMiddle> {
                               Text(
                                 'Status: ${record['status']}',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: record['status'] == 'completed'
                                       ? Colors.green
@@ -146,6 +179,9 @@ class _ContentMiddleState extends State<ContentMiddle> {
                                       : Colors.black87),
                                 ),
                               ),
+                              SizedBox(height: 20),
+                              // Status animation
+                              _getStatusAnimation(record['status']),
                             ],
                           ),
                         ),

@@ -51,6 +51,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   flutter_svg: ^2.0.7
   cached_network_image: ^3.2.3
+  video_player: ^2.5.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.1"
@@ -59,7 +60,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon"
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "FFFFFFFF"
+  adaptive_icon_foreground: "assets/icon/icon.png"
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -81,6 +84,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/icon/iconmain.png
     - assets/icon/icon.png
     - assets/vehicle.png
     - assets/servicing-gun.jpg
@@ -92,6 +96,8 @@ flutter:
     - assets/images/bus.png
     - assets/images/car.png
     - assets/images/lorry.png
+    - assets/videos/service.webm
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
