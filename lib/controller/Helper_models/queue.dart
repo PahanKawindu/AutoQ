@@ -100,33 +100,40 @@ class QueueService {
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
           .get();
       int totalPositionsToday = queueSnapshot.docs.length;
-      //print('totalPositionsToday: $totalPositionsToday');
+      print('totalPositionsToday: $totalPositionsToday');
 
-      // Get the current servicing position number
+// Query Firestore to get all relevant positions with specific statuses
       QuerySnapshot servicingSnapshot = await _firestore
           .collection('queue')
-          .where('queueTime',
-              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+          .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
           .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
-          .where('status', whereIn: ['servicing', 'completed']).get();
-      String currentServicingPosition = servicingSnapshot.docs.isNotEmpty
-          ? servicingSnapshot.docs.first['positionNo'].toString()
-          : 'Closed.'; // -1 if no servicing position is found
-      //print('currentServicingPosition: $currentServicingPosition');
+          .where('status', whereIn: ['servicing', 'completed', 'waiting'])
+          .orderBy('positionNo') // Ensure results are ordered by positionNo
+          .get();
 
-      if (totalPositionsToday > 0) {
-        QuerySnapshot lastPositionSnapshot = await _firestore
-            .collection('queue')
-            .where('positionNo', isEqualTo: totalPositionsToday)
-            .where('queueTime', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
-            .where('queueTime', isLessThan: Timestamp.fromDate(endOfDay))
-            .where('status', isEqualTo: 'completed')
-            .get();
+// Initialize variables
+      String currentServicingPosition = 'Closed.';
+      String lastPosition = 'N/A';
+      if (servicingSnapshot.docs.isNotEmpty) {
+        // Check the first document for servicing start
+        var firstDoc = servicingSnapshot.docs.first;
+        if (firstDoc['positionNo'] == 1 && firstDoc['status'] == 'servicing') {
+          currentServicingPosition = firstDoc['positionNo'].toString();
+        }
 
-        if (lastPositionSnapshot.docs.isNotEmpty) {
-          currentServicingPosition = totalPositionsToday.toString();
+        // Determine the last valid position
+        var validDocs = servicingSnapshot.docs.where((doc) {
+          return ['servicing', 'completed'].contains(doc['status']);
+        }).toList();
+
+        if (validDocs.isNotEmpty) {
+          var lastDoc = validDocs.last;
+          currentServicingPosition = lastDoc['positionNo'].toString();
         }
       }
+
+      print('Current Servicing Position: $currentServicingPosition');
+      //print('Last Position: $lastPosition');
 
       //print('currentServicingPosition: $currentServicingPosition');
 

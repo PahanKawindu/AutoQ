@@ -125,7 +125,9 @@ class _ContentTopState extends State<ContentTop> with SingleTickerProviderStateM
                           ],
                         ),
                         child: Text(
-                          '${widget.userPosition}',
+                          widget.userPosition == 'Not found'
+                              ? 'You have no reservation yet'
+                              : '${widget.userPosition}',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
