@@ -197,7 +197,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "Your Vehicle, Our Priority! Reserve Your Spot Now.",
+                  "Your Vehicle, Our Priority!",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 20,
@@ -217,7 +217,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
                       assetPath: 'assets/images/reserve.svg',
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color(0xFF34A0A4),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -233,7 +233,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'Check the Queue',
                       description: 'Stay updated on your service progress in real-time.',
                       assetPath: 'assets/images/check.svg',
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color(0xFF34A0A4),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -249,7 +249,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
                       assetPath: 'assets/images/about.svg',
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color(0xFF34A0A4),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -289,8 +289,6 @@ class _UserHomeBodyState extends State<UserHomeBody> {
         elevation: 5,
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          splashColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade200,
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(16.0),

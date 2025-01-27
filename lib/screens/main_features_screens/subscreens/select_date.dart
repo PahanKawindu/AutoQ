@@ -1,3 +1,4 @@
+// select_date.dart
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +24,22 @@ class _SelectDateState extends State<SelectDate> {
   int? _appointmentsCount;
   int? _nextQueueNumber;
   String? _estimatedQueueTime;
+  String? _formatedEstimatedQueueTime;
   bool _isAppointmentAvailable = true;
+  bool _hasTodayAppointment = false;
+  String? _currentUserId;
+
+  Future<void> _checkTodayAppointment() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    if (uid != null) {
+      bool hasAppointment = await _appointmentsService.hasTodayAppointment(uid, DateTime.now());
+      setState(() {
+        _currentUserId = uid;
+        _hasTodayAppointment = hasAppointment;
+      });
+    }
+  }
 
   Future<void> _fetchAndLogLimit() async {
     int limit = await _appointmentLimitsService.getAppointmentLimit(_selectedDate);
@@ -50,6 +66,20 @@ class _SelectDateState extends State<SelectDate> {
     setState(() {
       _nextQueueNumber = result['nextQueueNumber'];
       _estimatedQueueTime = result['estimatedQueueTime'];
+
+      if (_estimatedQueueTime != null) {
+        // Parse the _estimatedQueueTime to a DateTime object
+        DateTime estimatedTime = DateTime.parse(_estimatedQueueTime!);
+
+        // Extract the hours and minutes
+        _formatedEstimatedQueueTime = '${estimatedTime.hour.toString().padLeft(2, '0')}:${estimatedTime.minute.toString().padLeft(2, '0')}';
+
+        // Log and save to a new variable
+        print('Here--------------------: $_estimatedQueueTime');
+        print('Formatted Time----------: $_formatedEstimatedQueueTime');
+      } else {
+        print('Error: _estimatedQueueTime is null');
+      }
     });
   }
 
@@ -80,6 +110,7 @@ class _SelectDateState extends State<SelectDate> {
   @override
   void initState() {
     super.initState();
+    _checkTodayAppointment();
     _fetchAndLogLimit();
     _fetchAndLogAppointmentsCount();
     _fetchAndLogNextQueueAndTime();
@@ -95,7 +126,29 @@ class _SelectDateState extends State<SelectDate> {
         color: Colors.white, // Set body background color to white
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
+          child: _hasTodayAppointment
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Currently, our service is limited to only one appointment per day.',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Redirect to home screen
+                },
+                child: Text('Go to Home'),
+              ),
+            ],
+          )
+              : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Title Section
@@ -129,25 +182,48 @@ class _SelectDateState extends State<SelectDate> {
                 focusedDay: _selectedDate,
                 selectedDayPredicate: (day) => isSameDay(_selectedDate, day),
                 onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDate = selectedDay;
-                  });
-                  _fetchAndLogLimit();
-                  _fetchAndLogAppointmentsCount();
-                  _fetchAndLogNextQueueAndTime();
+                  if (selectedDay.isAfter(DateTime.now().subtract(Duration(days: 1)))) {
+                    setState(() {
+                      _selectedDate = selectedDay;
+                    });
+                    _fetchAndLogLimit();
+                    _fetchAndLogAppointmentsCount();
+                    _fetchAndLogNextQueueAndTime();
+                  }
                 },
-                firstDay: DateTime(2025),
+                firstDay: DateTime.now(),
                 lastDay: DateTime(2030),
+                enabledDayPredicate: (day) {
+                  return day.isAfter(DateTime.now().subtract(Duration(days: 1)));
+                },
               ),
               SizedBox(height: 20),
               // Appointment Availability
               if (_isAppointmentAvailable) ...[
                 if (_nextQueueNumber != null && _estimatedQueueTime != null) ...[
-                  Text('Next Queue Number: $_nextQueueNumber'),
+                  Center(
+                    child: Text(
+                      'Next Queue Number: $_nextQueueNumber',
+                      style: TextStyle(
+                        fontSize: 18, // Increased font size
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Colors.blue, // Highlight color
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 10),
-                  Text('Estimated Queue Time: $_estimatedQueueTime'),
+                  Center(
+                    child: Text(
+                      'Estimated Queue Time: $_formatedEstimatedQueueTime',
+                      style: TextStyle(
+                        fontSize: 16, // Adjusted font size
+                        color: Colors.black87, // Regular color for contrast
+                      ),
+                    ),
+                  ),
                 ],
-              ] else ...[
+              ]
+              else ...[
                 Text(
                   'Appointments for this date are already reserved.',
                   style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),

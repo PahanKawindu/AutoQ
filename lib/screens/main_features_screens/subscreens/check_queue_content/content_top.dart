@@ -17,7 +17,8 @@ class ContentTop extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround, // Justify content horizontally
+          mainAxisAlignment:
+              MainAxisAlignment.spaceAround, // Justify content horizontally
           children: [
             SizedBox(height: 60),
             // Display 'Current Queue' only if totalPositionsToday is not 0
@@ -33,28 +34,28 @@ class ContentTop extends StatelessWidget {
             // Conditional message display
             totalPositionsToday == 0
                 ? Text(
-              'No any reservation yet. You are the first one!',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-            )
+                    'No any reservation yet. You are the first one!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  )
                 : Container(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                '$currentServicingPosition/$totalPositionsToday',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      '$currentServicingPosition/$totalPositionsToday',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
           ],
         ),
         // Display userPosition below the current queue
@@ -62,7 +63,9 @@ class ContentTop extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Text(
-              'Your Position: $userPosition',
+              userPosition == 'Not found'
+                  ? 'You have no reservation for today'
+                  : 'Your Position: $userPosition',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

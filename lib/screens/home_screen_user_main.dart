@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
         exit(0); // Terminates the app
       },
       child: Scaffold(
-        backgroundColor: Color(0xFFE5F7F1), // Light transparent green background for body
+        backgroundColor: Color(0xFFE5E5E5), // Light transparent green background for body
         appBar: AppBar(
           title: const Text(
             'AutoQ',
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.white, // Set the AppBar background color to white
+          backgroundColor: Color(0xFFE5E5E5), // Set the AppBar background color to white
           elevation: 1, // Subtle shadow effect for a more professional look
           leading: Padding(
             padding: const EdgeInsets.only(left: 12.0),
