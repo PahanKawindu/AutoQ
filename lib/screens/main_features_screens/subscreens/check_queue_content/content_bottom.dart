@@ -62,7 +62,7 @@ class ContentBottom extends StatelessWidget {
           if (isServiced)
           // Service completed message in green
             Text(
-              'Your vehicle service is completed!',
+              '',
               style: TextStyle(fontSize: 32, color: Colors.green, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             )
