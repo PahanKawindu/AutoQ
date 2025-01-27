@@ -48,85 +48,182 @@ class _ViewReservationAdminState extends State<ViewReservationAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Reservation'),
-        backgroundColor: const Color(0xFF46C2AF),
+        backgroundColor: Color(0xFFE5F7F1),
+        centerTitle: true,
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : _groupedReservations.isEmpty
-          ? Center(child: Text('No Reservations Found'))
-          : ListView.builder(
-        itemCount: _groupedReservations.keys.length,
-        itemBuilder: (context, index) {
-          String date = _groupedReservations.keys.elementAt(index);
-          List<Map<String, dynamic>> reservations = _groupedReservations[date] ?? [];
+          ? Center(child: Text('No Reservations Found', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)))
+          : SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Reservation Overview.',
+              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            Text(
+              'Manage and view all the customer reservations efficiently.',
+              style: TextStyle(fontSize: 16, color: Colors.black54),
+            ),
+            SizedBox(height: 20),
+            // Reservations list
+            ..._groupedReservations.keys.map((date) {
+              List<Map<String, dynamic>> reservations = _groupedReservations[date] ?? [];
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Date Header
-              Container(
-                padding: EdgeInsets.all(10),
-                color: Colors.grey[200],
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: Text(
-                  'Date: $date',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              // Centered Cards for Reservations
-              ...reservations.map((reservation) {
-                // Determine card color based on status
-                Color cardColor;
-                if (reservation['status'] == 'completed') {
-                  cardColor = Colors.green[100]!;
-                } else if (reservation['status'] == 'canceled') {
-                  cardColor = Colors.red[100]!;
-                } else {
-                  cardColor = Colors.white;
-                }
-
-                return Card(
-                  color: cardColor,
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${reservation['first_name']} ${reservation['last_name']}',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 5),
-                        Text('Email: ${reservation['email']}'),
-                        SizedBox(height: 5),
-                        Text('Contact: ${reservation['contact_no']}'),
-                        SizedBox(height: 5),
-                        Text('Appointment Date: ${reservation['appointmentDate'].toDate()}'),
-                        SizedBox(height: 5),
-                        Text('Vehicle Type: ${reservation['vehicleType']}'),
-                        SizedBox(height: 5),
-                        Text('Vehicle Reg No: ${reservation['vehicleRegNo']}'),
-                        SizedBox(height: 5),
-                        Text('Chassis No: ${reservation['ChassisNo']}'),
-                        SizedBox(height: 5),
-                        Text('Service: ${reservation['ServicePackgeName']}'),
-                        SizedBox(height: 5),
-                        Text(
-                          'Status: ${reservation['status']}',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Date Header
+                  Container(
+                    padding: EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Date: $date',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black54),
                     ),
                   ),
-                );
-              }).toList(),
-            ],
-          );
-        },
+                  SizedBox(height: 12),
+                  // Reservations
+                  ...reservations.map((reservation) {
+                    // Determine card color based on status
+                    Color cardColor;
+                    IconData statusIcon;
+                    if (reservation['status'] == 'completed') {
+                      cardColor = Colors.green[50]!;
+                      statusIcon = Icons.check_circle_outline;
+                    } else if (reservation['status'] == 'canceled') {
+                      cardColor = Colors.red[50]!;
+                      statusIcon = Icons.cancel_outlined;
+                    } else {
+                      cardColor = Colors.white;
+                      statusIcon = Icons.access_time_outlined;
+                    }
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Card(
+                        color: cardColor,
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        elevation: 4,
+                        shadowColor: Colors.black54,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Status Icon and Name
+                              Row(
+                                children: [
+                                  Icon(statusIcon, color: Color(0xFFFFD700), size: 30),
+                                  SizedBox(width: 12),
+                                  Text(
+                                    '${reservation['first_name']} ${reservation['last_name']}',
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 12),
+                              // Reservation Details
+                              Row(
+                                children: [
+                                  Icon(Icons.email_outlined, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      '${reservation['email']}',
+                                      style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.phone_outlined, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    '${reservation['contact_no']}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.access_alarm_outlined, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Appointment: ${DateFormat('yyyy-MM-dd HH:mm').format(reservation['appointmentDate'].toDate())}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.directions_car_outlined, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Vehicle Type: ${reservation['vehicleType']}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.car_repair_outlined, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Reg No: ${reservation['vehicleRegNo']}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on_outlined, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Chassis No: ${reservation['ChassisNo']}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 12),
+                              // Status
+                              Row(
+                                children: [
+                                  Icon(Icons.info_outline, size: 18, color: Colors.grey[600]),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Status: ${reservation['status']}',
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.teal[700]),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  SizedBox(height: 20),
+                ],
+              );
+            }).toList(),
+          ],
+        ),
       ),
     );
   }

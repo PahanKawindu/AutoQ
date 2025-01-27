@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_flutter1/controller/Helper_models/appointments.dart';
 
+import '../screens/home_screen_user_main.dart';
+
 class MakeAppointment extends StatefulWidget {
   @override
   _MakeAppointmentState createState() => _MakeAppointmentState();
@@ -97,8 +99,8 @@ class _MakeAppointmentState extends State<MakeAppointment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Make Appointment'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFFE5F7F1),
+        elevation: 0, // Removing shadow for cleaner look
       ),
       body: Center(
         child: _isLoading
@@ -119,32 +121,109 @@ class _MakeAppointmentState extends State<MakeAppointment> {
   }
 
   Widget _buildAppointmentSuccess() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Appointment Success!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
+    return Center(
+      child: Card(
+        elevation: 5, // Subtle shadow for depth
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25), // Rounded corners for a soft look
+          side: BorderSide(
+            color: Color(0xFF46C2AF), // Thin green border
+            width: 1, // Thin border
+          ),
         ),
-        SizedBox(height: 20),
-        Text(
-          'Details:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        margin: EdgeInsets.symmetric(horizontal: 24, vertical: 40), // Adjusted for better balance
+        color: Color(0xFFE5E5E5), // Light green background
+        child: Padding(
+          padding: const EdgeInsets.all(20.0), // Padding inside the card
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Centered icon
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.green, // Green icon
+                size: 60, // Larger size for prominence
+              ),
+              SizedBox(height: 20),
+
+              // Appointment success title
+              Text(
+                'Appointment Success!',
+                style: TextStyle(
+                  fontSize: 26, // Larger font size for prominence
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green, // Green text for the title
+                ),
+              ),
+              SizedBox(height: 20),
+
+              // Details header
+              Text(
+                'Appointment Details:',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87, // Soft black for readability
+                ),
+              ),
+              SizedBox(height: 10),
+
+              // Appointment details
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Vehicle: ${_appointmentDetails!['vehicleType']}',
+                        style: TextStyle(color: Colors.black54, fontSize: 16)),
+                    SizedBox(height: 6),
+                    Text('Registration: ${_appointmentDetails!['vehicleRegNo']}',
+                        style: TextStyle(color: Colors.black54, fontSize: 16)),
+                    SizedBox(height: 6),
+                    Text('Date: ${_appointmentDetails!['appointmentDate']}',
+                        style: TextStyle(color: Colors.black54, fontSize: 16)),
+                    SizedBox(height: 6),
+                    Text('Queue No: ${_appointmentDetails!['positionNo']}',
+                        style: TextStyle(color: Colors.black54, fontSize: 16)),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+
+              // Home button with theme green color and white text
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreenUser(), // Navigate to HomeScreen
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                  child: Text(
+                    'Go to Home',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF46C2AF), // Use theme green for the button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50), // Rounded button corners
+                  ),
+                  textStyle: TextStyle(fontSize: 18),
+                ),
+              ),
+            ],
+          ),
         ),
-        SizedBox(height: 10),
-        Text('Vehicle: ${_appointmentDetails!['vehicleType']}'),
-        Text('Registration: ${_appointmentDetails!['vehicleRegNo']}'),
-        Text('Date: ${_appointmentDetails!['appointmentDate']}'),
-        Text('Queue No: ${_appointmentDetails!['positionNo']}'),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            //Navigator.of(context).pushReplacementNamed('/home');
-          },
-          child: Text('Home'),
-          style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF34A0A4)),
-        ),
-      ],
+      ),
     );
   }
+
+
+
+
 }

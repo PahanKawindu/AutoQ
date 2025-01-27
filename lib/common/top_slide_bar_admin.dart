@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_flutter1/screens/home_screen_admin_main.dart';
+import '../screens/signup_screen.dart';
 import 'MyProfileScreen.dart';
 import 'AboutUsScreen.dart';
 import 'HelpSupportScreen.dart';
+
 
 class TopSlideBarAdmin extends StatefulWidget {
   @override
@@ -43,52 +46,131 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: 400, // Height of the slide bar
+    return Drawer(
       child: Column(
         children: [
-          // Profile section
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(_profileImage), // User profile image
+          // Drawer Header with Back Button in top-right corner
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Color(0xFF46C2AF),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Stack(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                // Profile Info and Avatar
+                Row(
                   children: [
-                    Text(
-                      '$_firstName $_lastName',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    CircleAvatar(
+                      radius: 30, // Larger size
+                      backgroundColor: Color(0xFF46C2AF), // Border color
+                      child: CircleAvatar(
+                        radius: 45, // Inner circle with some padding
+                        backgroundColor: Colors.white, // Background color inside the border
+                        child: Icon(
+                          Icons.person, // Default profile icon
+                          size: 40, // Icon size
+                          color: Color(0xFF46C2AF), // Icon color
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 18),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$_firstName $_lastName',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          _contactNo,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.logout, color: Colors.red),
-                  onPressed: () {
-                    _handleLogout();
-                  },
+                // Back Button Positioned at the top-right corner
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreenAdmin(), // Navigate to HomeScreenAdmin
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20),
-          // Options section
+          // Drawer Items
           ListTile(
-            leading: Icon(Icons.person),
+            leading: Icon(Icons.person, color: Color(0xFF46C2AF)),
             title: Text('My Profile'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyProfileScreen()),
+                MaterialPageRoute(
+                  builder: (context) => MyProfileScreen(),
+                ),
               );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.info, color: Color(0xFF46C2AF)),
+            title: Text('About Us'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutUsScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.help, color: Color(0xFF46C2AF)),
+            title: Text('Help & Support'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HelpSupportScreen(),
+                ),
+              );
+            },
+          ),
+          // Logout button
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              color: Colors.redAccent,
+              size: 26,
+            ),
+            title: Text(
+              'Logout',
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 16,
+              ),
+            ),
+            onTap: () async {
+              bool shouldLogout = await _showLogoutConfirmationDialog();
+              if (shouldLogout) {
+                _handleLogout();
+              }
             },
           ),
         ],
@@ -96,11 +178,43 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
     );
   }
 
+  // Logout Confirmation Dialog
+  Future<bool> _showLogoutConfirmationDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirm Logout'),
+        content: Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text('Logout'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+              foregroundColor: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    ) ?? false;
+  }
+
   // Handle logout functionality
   Future<void> _handleLogout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('uid');
     await prefs.remove('userRole');
-    // Redirect to login page
+
+    // Navigate to the signup screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SignupScreen(),
+      ),
+    );
   }
 }

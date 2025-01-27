@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ContentTop extends StatelessWidget {
+class ContentTop extends StatefulWidget {
   final int totalPositionsToday;
   final int currentServicingPosition;
   final String userPosition;
@@ -13,65 +13,133 @@ class ContentTop extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _ContentTopState createState() => _ContentTopState();
+}
+
+class _ContentTopState extends State<ContentTop> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1), // Animation duration
+    )..repeat(reverse: true); // Repeat animation in reverse
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround, // Justify content horizontally
-          children: [
-            SizedBox(height: 60),
-            // Display 'Current Queue' only if totalPositionsToday is not 0
-            if (totalPositionsToday != 0)
-              Text(
-                'Current Queue',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0), // Horizontal padding for the whole section
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
+        children: [
+          // Current Queue Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center, // Center align the row
+            children: [
+              SizedBox(height: 60), // Space above the content
+              if (widget.totalPositionsToday != 0)
+                Text(
+                  'Current Queue     ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              // Conditional message display
+              widget.totalPositionsToday == 0
+                  ? Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'No reservation yet. You are the first one!',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
+                ),
+              )
+              : AnimatedContainer(
+                duration: Duration(seconds: 1), // Animation duration for border changes
+                curve: Curves.easeInOut, // Smooth curve for the animation
+                margin: const EdgeInsets.only(top: 5.0), // Margin for separation
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24), // Adjust padding for better spacing
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black54, // Black border color with opacity
+                    width: 1.0, // Set border width
+                  ),
+                  borderRadius: BorderRadius.circular(12), // Rounded corners for a smoother look
+                ),
+                child: Text(
+                  '${widget.currentServicingPosition} / ${widget.totalPositionsToday}',
+                  style: TextStyle(
+                    fontSize: 16, // Slightly larger font size
+                    color: Colors.black87, // Text color
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center, // Ensure text is centered inside the box
                 ),
               ),
-            // Conditional message display
-            totalPositionsToday == 0
-                ? Text(
-              'No any reservation yet. You are the first one!',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-                : Container(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                '$currentServicingPosition/$totalPositionsToday',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-        // Display userPosition below the current queue
-        if (totalPositionsToday != 0)
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
-              'Your Position: $userPosition',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+
+            ],
           ),
-      ],
+
+          // Display userPosition below the current queue
+          if (widget.totalPositionsToday != 0)
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center, // Center align the row
+                children: [
+                  Text(
+                    'Your Position   ',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, child) {
+                      return Container(
+                        padding: const EdgeInsets.all(12), // Padding inside the circle
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(_controller.value), // Circle color with animation opacity
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.green.withOpacity(0.5),
+                              blurRadius: _controller.value * 20,
+                              spreadRadius: _controller.value * 5,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          '${widget.userPosition}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white, // Text color
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

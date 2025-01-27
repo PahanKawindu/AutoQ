@@ -1,3 +1,4 @@
+// select_date.dart
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,8 +25,21 @@ class _SelectDateState extends State<SelectDate> {
   int? _nextQueueNumber;
   String? _estimatedQueueTime;
   bool _isAppointmentAvailable = true;
+  bool _hasTodayAppointment = false;
+  String? _currentUserId;
 
-  // Fetch the appointment limit for the selected date
+  Future<void> _checkTodayAppointment() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    if (uid != null) {
+      bool hasAppointment = await _appointmentsService.hasTodayAppointment(uid, DateTime.now());
+      setState(() {
+        _currentUserId = uid;
+        _hasTodayAppointment = hasAppointment;
+      });
+    }
+  }
+
   Future<void> _fetchAndLogLimit() async {
     int limit = await _appointmentLimitsService.getAppointmentLimit(_selectedDate);
     setState(() {
@@ -33,13 +47,11 @@ class _SelectDateState extends State<SelectDate> {
     });
   }
 
-  // Fetch the number of appointments already booked for the selected date
   Future<void> _fetchAndLogAppointmentsCount() async {
     int appointmentsCount = await _appointmentsService.getAppointmentsCount(_selectedDate);
     setState(() {
       _appointmentsCount = appointmentsCount;
 
-      // Check if the appointment count is less than the limit, or if the limit is 0
       if (_appointmentLimit == 0 || _appointmentsCount != _appointmentLimit) {
         _isAppointmentAvailable = true;
       } else {
@@ -48,7 +60,6 @@ class _SelectDateState extends State<SelectDate> {
     });
   }
 
-  // Fetch the next queue number and the estimated queue time for the selected date
   Future<void> _fetchAndLogNextQueueAndTime() async {
     var result = await _queueService.getNextQueueAndTime(_selectedDate);
     setState(() {
@@ -57,7 +68,6 @@ class _SelectDateState extends State<SelectDate> {
     });
   }
 
-  // Save selected date, next queue number, and estimated queue time to shared preferences
   Future<void> _saveSelectedDateAndQueueDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('selectedDate', DateFormat('yyyy-MM-dd').format(_selectedDate));
@@ -69,7 +79,6 @@ class _SelectDateState extends State<SelectDate> {
     }
   }
 
-  // Remove selected date, queue number, and estimated queue time from shared preferences
   Future<void> _removeSelectedDateAndQueueDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('selectedDate');
@@ -86,6 +95,7 @@ class _SelectDateState extends State<SelectDate> {
   @override
   void initState() {
     super.initState();
+    _checkTodayAppointment();
     _fetchAndLogLimit();
     _fetchAndLogAppointmentsCount();
     _fetchAndLogNextQueueAndTime();
@@ -95,61 +105,150 @@ class _SelectDateState extends State<SelectDate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Date'),
-        backgroundColor: Color(0xFF34A0A4),
+        backgroundColor: Color(0xFFE5F7F1),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              'Select Date',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            TableCalendar(
-              focusedDay: _selectedDate,
-              selectedDayPredicate: (day) => isSameDay(_selectedDate, day),
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDate = selectedDay;
-                });
-                _fetchAndLogLimit();
-                _fetchAndLogAppointmentsCount();
-                _fetchAndLogNextQueueAndTime();
-              },
-              firstDay: DateTime(2025),
-              lastDay: DateTime(2030),
-            ),
-            SizedBox(height: 20),
-            if (_isAppointmentAvailable) ...[
-              // Display next queue number and estimated time if appointments are available
-              if (_nextQueueNumber != null && _estimatedQueueTime != null) ...[
-                Text('Next Queue Number: $_nextQueueNumber'),
-                SizedBox(height: 10),
-                Text('Estimated Queue Time: $_estimatedQueueTime'),
-              ],
-            ] else ...[
-              // Display message if no appointments are available
+      body: Container(
+        color: Colors.white, // Set body background color to white
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: _hasTodayAppointment
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Text(
-                'Appointments for this date are already reserved.',
-                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                'Currently, our service is limited to only one appointment per day.',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Redirect to home screen
+                },
+                child: Text('Go to Home'),
               ),
             ],
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _isAppointmentAvailable
-                  ? () async {
-                await _saveSelectedDateAndQueueDetails();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => VehicleDetails()),
-                );
-              }
-                  : null, // Disable button if no appointments are available
-              child: Text('Continue'),
-            ),
-          ],
+          )
+              : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title Section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select Date for Service',
+                      style: TextStyle(
+                        fontSize: 20, // Font size for main title
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Choose an available date for your service appointment.',
+                      style: TextStyle(
+                        fontSize: 16, // Font size for subtitle
+                        color: Colors.black54,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              ),
+              // Calendar
+              TableCalendar(
+                focusedDay: _selectedDate,
+                selectedDayPredicate: (day) => isSameDay(_selectedDate, day),
+                onDaySelected: (selectedDay, focusedDay) {
+                  if (selectedDay.isAfter(DateTime.now().subtract(Duration(days: 1)))) {
+                    setState(() {
+                      _selectedDate = selectedDay;
+                    });
+                    _fetchAndLogLimit();
+                    _fetchAndLogAppointmentsCount();
+                    _fetchAndLogNextQueueAndTime();
+                  }
+                },
+                firstDay: DateTime.now(),
+                lastDay: DateTime(2030),
+                enabledDayPredicate: (day) {
+                  return day.isAfter(DateTime.now().subtract(Duration(days: 1)));
+                },
+              ),
+              SizedBox(height: 10),
+              // Appointment Availability
+              if (_isAppointmentAvailable) ...[
+                if (_nextQueueNumber != null && _estimatedQueueTime != null) ...[
+                  Center(
+                    child: Text(
+                      'Your Position  $_nextQueueNumber',
+                      style: TextStyle(
+                        fontSize: 18, // Increased font size
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Color(0xFF46C2AF), // Highlight color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Center(
+                    child: Text(
+                      'Bring your vehicle around\n   $_estimatedQueueTime',
+                      style: TextStyle(
+                        fontSize: 16, // Adjusted font size
+                        color: Colors.black87, // Regular color for contrast
+                      ),
+                    ),
+                  ),
+                ],
+              ]
+              else ...[
+                Text(
+                  'Appointments for this date are already reserved.',
+                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+              ],
+              Spacer(),
+              // Continue Button
+              Center(
+                child: SizedBox(
+                  width: 180, // Standard button width
+                  height: 50, // Standard button height
+                  child: ElevatedButton(
+                    onPressed: _isAppointmentAvailable
+                        ? () async {
+                      await _saveSelectedDateAndQueueDetails();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => VehicleDetails()),
+                      );
+                    }
+                        : null, // Disable button if no appointments are available
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Color(0xFF46C2AF), // White text color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(500.0), // Rounded corners
+                      ),
+                    ),
+                    child: const Text(
+                      'Continue',
+                      style: TextStyle(
+                        fontSize: 16, // Font size for better readability
+                        fontWeight: FontWeight.bold, // Bold text
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+            ],
+          ),
         ),
       ),
     );

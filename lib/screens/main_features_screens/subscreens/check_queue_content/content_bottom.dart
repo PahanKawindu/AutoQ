@@ -23,10 +23,10 @@ class ContentBottom extends StatelessWidget {
       children: [
         // Check if user has reservation
         if (!hasReservation)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
+          Center(  // Center the button
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0), // Add vertical padding
+              child: ElevatedButton(
                 onPressed: () {
                   // Navigate to SelectVehicle screen with AppBar
                   Navigator.push(
@@ -34,17 +34,22 @@ class ContentBottom extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => Scaffold(
                         appBar: AppBar(
-                          title: Text('Select Vehicle'),
-                          backgroundColor: Colors.teal, // Customize the AppBar color if needed
+                          backgroundColor: Color(0xFFE5F7F1),
                         ),
                         body: SelectVehicle(), // Your SelectVehicle screen content
                       ),
                     ),
                   );
                 },
+                style: ElevatedButton.styleFrom(
+
+                  minimumSize: Size(200, 40), // Increased width and height for button
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16), // Padding for button text
+                  textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Text styling
+                ),
                 child: Text('Book Now'),
               ),
-            ],
+            ),
           ),
 
         // If user has reservation, check if service is completed

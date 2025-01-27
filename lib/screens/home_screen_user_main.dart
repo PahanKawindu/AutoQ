@@ -66,6 +66,18 @@ class _HomeScreenState extends State<HomeScreenUser> {
     );
   }
 
+  // Refresh function for pull-to-refresh
+  Future<void> _refreshContent() async {
+    // You can add custom logic to refresh your content here
+    // For example, re-fetch data from Firestore, SharedPreferences, or APIs.
+    // If you need to reload the data, you can call the necessary functions here.
+
+    await Future.delayed(Duration(seconds: 2)); // Simulate a network request
+
+    // After refreshing, update the UI state
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -73,7 +85,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
         exit(0); // Terminates the app
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFE5E5E5),
+        backgroundColor: Color(0xFFE5E5E5), // Light transparent green background for body
         appBar: AppBar(
           title: const Text(
             'AutoQ',
@@ -83,7 +95,8 @@ class _HomeScreenState extends State<HomeScreenUser> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xFFE5E5E5),
+          backgroundColor: Color(0xFFE5E5E5), // Set the AppBar background color to white
+          elevation: 1, // Subtle shadow effect for a more professional look
           leading: Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: Container(
@@ -142,24 +155,35 @@ class _HomeScreenState extends State<HomeScreenUser> {
         ),
         body: Stack(
           children: [
-            // Conditionally load either the Home Body or Service History
-            _selectedIndex == 0 ? UserHomeBody() : UserServiceHistory(),
+            // Add SizedBox with height 30 at the top and bottom of the body
+            Column(
+              children: [
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: _refreshContent, // Attach the refresh function
+                    child: _selectedIndex == 0 ? UserHomeBody() : UserServiceHistory(),
+                  ),
+                ),
+              ],
+            ),
             // Slide Bar (Top Sliding Menu)
             if (_isSlideBarOpen)
               Positioned(
                 top: 0,
                 left: 0,
-                right: 0,
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  height: 600, // Height of the sliding menu
+                  width: MediaQuery.of(context).size.width / 1.29, // Half of the screen width
+                  height: MediaQuery.of(context).size.height * 1,
                   color: Colors.black.withOpacity(0.6), // Background overlay
                   child: TopSlideBar(), // Your custom slide bar
                 ),
               ),
           ],
         ),
+
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white, // Set the bottom navigation bar background color to white
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -171,7 +195,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
+          selectedItemColor: Color(0xFF46C2AF),
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,

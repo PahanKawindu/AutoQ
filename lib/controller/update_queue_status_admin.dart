@@ -1,4 +1,3 @@
-// Import the necessary files
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart'; // To format the date
@@ -27,86 +26,126 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Queue Status'),
-        backgroundColor: const Color(0xFF46C2AF),
+        backgroundColor: const Color(0xFFE5F7F1),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Owner: ${widget.queueData['first_name']} ${widget.queueData['last_name']}'),
-            SizedBox(height: 10),
-            Text('Appointment ID: ${widget.queueData['appointmentId']}'),
-            SizedBox(height: 10),
-            Text('Queue Time: $formattedQueueTime'),
-            SizedBox(height: 10),
-            Text('Position No: ${widget.queueData['positionNo']}'),
-            SizedBox(height: 10),
-            Text('Status: ${widget.queueData['status']}'),
-            SizedBox(height: 10),
-            Text('Vehicle Type: ${widget.queueData['VehicleType']}'),
-            SizedBox(height: 10),
-            Text('Contact No: ${widget.queueData['contact_no']}'),
-            SizedBox(height: 20),
-            Text('Select New Status:'),
-            RadioListTile<String>(
-              title: Text('Completed'),
-              value: 'completed',
-              groupValue: _selectedStatus,
-              onChanged: (String? value) {
-                setState(() {
-                  _selectedStatus = value;
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: Text('Servicing'),
-              value: 'servicing',
-              groupValue: _selectedStatus,
-              onChanged: (String? value) {
-                setState(() {
-                  _selectedStatus = value;
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: Text('Waiting'),
-              value: 'waiting',
-              groupValue: _selectedStatus,
-              onChanged: (String? value) {
-                setState(() {
-                  _selectedStatus = value;
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: Text('Canceled'),
-              value: 'canceled',
-              groupValue: _selectedStatus,
-              onChanged: (String? value) {
-                setState(() {
-                  _selectedStatus = value;
-                });
-              },
+            Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildInfoRow('Owner', '${widget.queueData['first_name']} ${widget.queueData['last_name']}'),
+                    _buildInfoRow('Appointment ID', widget.queueData['appointmentId']),
+                    _buildInfoRow('Queue Time', formattedQueueTime),
+                    _buildInfoRow('Position No', widget.queueData['positionNo'].toString()),
+                    _buildInfoRow('Status', widget.queueData['status'], highlight: true),
+                    _buildInfoRow('Vehicle Type', widget.queueData['VehicleType']),
+                    _buildInfoRow('Contact No', widget.queueData['contact_no']),
+                  ],
+                ),
+              ),
             ),
             SizedBox(height: 20),
-            _isLoading
-                ? Center(child: CircularProgressIndicator()) // Show spinner while loading
-                : Center(
-              child: ElevatedButton(
+            Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select New Status:',
+                      style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    ..._buildStatusOptions(),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: _isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF46C2AF),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 onPressed: _selectedStatus == null || _isLoading
                     ? null
                     : () async {
                   await _updateQueueStatus();
                 },
-                child: Text('Update Status'),
+                child: Text('Update Status', style: TextStyle(fontSize: 16,color: Colors.white)),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildInfoRow(String title, String value, {bool highlight = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 16,
+                color: highlight ? Colors.green : Colors.black, // Highlight service status
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildStatusOptions() {
+    final statuses = {
+      'completed': 'Completed',
+      'servicing': 'Servicing',
+      'waiting': 'Waiting',
+      'canceled': 'Canceled'
+    };
+
+    return statuses.entries.map((entry) {
+      return RadioListTile<String>(
+        title: Text(entry.value, style: TextStyle(fontSize: 16, color: Colors.black54)), // Small font size
+        value: entry.key,
+        groupValue: _selectedStatus,
+        onChanged: (String? value) {
+          setState(() {
+            _selectedStatus = value;
+          });
+        },
+        activeColor: const Color(0xFF46C2AF),
+      );
+    }).toList();
   }
 
   // Method to update the status
@@ -182,6 +221,7 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
           'timestamp': Timestamp.now(),
         });
       }
+
 
       // Send notification to the user
       await NotificationHandler.sendNotification(
