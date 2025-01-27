@@ -110,7 +110,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Sign up',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(fontSize: 18, color: Colors.white,fontWeight: FontWeight.w700),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -135,8 +135,8 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    ' Login ',
+                    style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
                   ),
                 ),
               ],

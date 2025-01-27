@@ -21,7 +21,7 @@ class _UserServiceHistoryState extends State<UserServiceHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color:Color(0xFFE5F7F1),
+        color:Color(0xFFE5E5E5),
         child: FutureBuilder<List<Map<String, dynamic>>>(
           future: serviceHistoryData,
           builder: (context, snapshot) {

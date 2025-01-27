@@ -248,19 +248,34 @@ class _VehicleDetailsState extends State<VehicleDetails> {
               onChanged: (_) => _validateForm(),
             ),
             SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity, // Full-width button
-              height: 50, // Standard height
-              child: ElevatedButton(
-                onPressed: _isFormValid
-                    ? () async {
-                  await _saveVehicleDetails();
-                  _makeAppointment(); // Make appointment logic
-                }
-                    : null,
-                child: Text('Make Appointment'),
+            Center(
+              child: SizedBox(
+                width: 200, // Standard button width
+                height: 50, // Standard button height
+                child: ElevatedButton(
+                  onPressed: _isFormValid
+                      ? () async {
+                    await _saveVehicleDetails();
+                    _makeAppointment(); // Make appointment logic
+                  }
+                      : null, // Disable button if form is not valid
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Color(0xFF46C2AF), // White text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(500.0), // Rounded corners
+                    ),
+                  ),
+                  child: const Text(
+                    'Make Appointment',
+                    style: TextStyle(
+                      fontSize: 16, // Font size for readability
+                      fontWeight: FontWeight.bold, // Bold text
+                    ),
+                  ),
+                ),
               ),
             ),
+
           ],
         ),
       ),

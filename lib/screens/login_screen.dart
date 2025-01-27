@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF46C2AF),
       appBar: AppBar(
-        title: const Text('LOGIN'),
+        title: const Text('Login'),
         backgroundColor: const Color(0xFF46C2AF),
         centerTitle: true,
         automaticallyImplyLeading: false, // This removes the back button
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: Text(
                       'Fast, Easy, Reliable \n Log In to Your Spot in Line!',
-                      style: TextStyle(fontSize: 20.0),
+                      style: TextStyle(fontSize: 20.0, color: Colors.white70),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -138,7 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: const TextStyle(
                                   color: Colors.blue,
                                   fontSize: 16.0,
-                                  fontStyle: FontStyle.italic,
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {

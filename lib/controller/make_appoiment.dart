@@ -125,14 +125,14 @@ class _MakeAppointmentState extends State<MakeAppointment> {
       child: Card(
         elevation: 5, // Subtle shadow for depth
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16), // Rounded corners for a soft look
+          borderRadius: BorderRadius.circular(25), // Rounded corners for a soft look
           side: BorderSide(
             color: Color(0xFF46C2AF), // Thin green border
-            width: 2, // Thin border
+            width: 1, // Thin border
           ),
         ),
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 40), // Adjusted for better balance
-        color: Colors.lightGreen.shade50, // Light green background
+        color: Color(0xFFE5E5E5), // Light green background
         child: Padding(
           padding: const EdgeInsets.all(20.0), // Padding inside the card
           child: Column(
@@ -142,7 +142,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
               // Centered icon
               Icon(
                 Icons.check_circle_outline,
-                color: Color(0xFF46C2AF), // Green icon
+                color: Colors.green, // Green icon
                 size: 60, // Larger size for prominence
               ),
               SizedBox(height: 20),
@@ -153,7 +153,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                 style: TextStyle(
                   fontSize: 26, // Larger font size for prominence
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF46C2AF), // Green text for the title
+                  color: Colors.green, // Green text for the title
                 ),
               ),
               SizedBox(height: 20),
@@ -211,7 +211,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF46C2AF), // Use theme green for the button
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Rounded button corners
+                    borderRadius: BorderRadius.circular(50), // Rounded button corners
                   ),
                   textStyle: TextStyle(fontSize: 18),
                 ),

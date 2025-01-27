@@ -149,7 +149,7 @@ class _PaymentControllerState extends State<PaymentController> {
 
                     // Standardized Pay Button
                     SizedBox(
-                      width: double.infinity,
+                      width:180,
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -161,10 +161,10 @@ class _PaymentControllerState extends State<PaymentController> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF34A0A4),
-                          padding: EdgeInsets.symmetric(vertical: 16.0),
+                          backgroundColor: Color(0xFF46C2AF),
+                          padding: EdgeInsets.symmetric(vertical: 12.0),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(50.0),
                           ),
                         ),
                         child: Text(

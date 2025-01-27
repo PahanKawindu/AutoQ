@@ -182,24 +182,24 @@ class _SelectDateState extends State<SelectDate> {
                   return day.isAfter(DateTime.now().subtract(Duration(days: 1)));
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               // Appointment Availability
               if (_isAppointmentAvailable) ...[
                 if (_nextQueueNumber != null && _estimatedQueueTime != null) ...[
                   Center(
                     child: Text(
-                      'Next Queue Number: $_nextQueueNumber',
+                      'Your Position  $_nextQueueNumber',
                       style: TextStyle(
                         fontSize: 18, // Increased font size
                         fontWeight: FontWeight.bold, // Bold text
-                        color: Colors.blue, // Highlight color
+                        color: Color(0xFF46C2AF), // Highlight color
                       ),
                     ),
                   ),
                   SizedBox(height: 10),
                   Center(
                     child: Text(
-                      'Estimated Queue Time: $_estimatedQueueTime',
+                      'Bring your vehicle around\n   $_estimatedQueueTime',
                       style: TextStyle(
                         fontSize: 16, // Adjusted font size
                         color: Colors.black87, // Regular color for contrast
@@ -216,22 +216,37 @@ class _SelectDateState extends State<SelectDate> {
               ],
               Spacer(),
               // Continue Button
-              SizedBox(
-                width: double.infinity, // Standard full-width button
-                height: 50, // Standard button height
-                child: ElevatedButton(
-                  onPressed: _isAppointmentAvailable
-                      ? () async {
-                    await _saveSelectedDateAndQueueDetails();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => VehicleDetails()),
-                    );
-                  }
-                      : null, // Disable button if no appointments are available
-                  child: Text('Continue'),
+              Center(
+                child: SizedBox(
+                  width: 180, // Standard button width
+                  height: 50, // Standard button height
+                  child: ElevatedButton(
+                    onPressed: _isAppointmentAvailable
+                        ? () async {
+                      await _saveSelectedDateAndQueueDetails();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => VehicleDetails()),
+                      );
+                    }
+                        : null, // Disable button if no appointments are available
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Color(0xFF46C2AF), // White text color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(500.0), // Rounded corners
+                      ),
+                    ),
+                    child: const Text(
+                      'Continue',
+                      style: TextStyle(
+                        fontSize: 16, // Font size for better readability
+                        fontWeight: FontWeight.bold, // Bold text
+                      ),
+                    ),
+                  ),
                 ),
               ),
+
             ],
           ),
         ),

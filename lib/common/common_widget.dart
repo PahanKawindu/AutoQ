@@ -6,7 +6,7 @@ mixin Common_widget {
     return ClipRRect(
       //     borderRadius: BorderRadius.circular(1.0),
       child: SizedBox(
-        width: 200,
+        width: 180,
         height: 55.0,
         child: ElevatedButton(
           onPressed: onPressed,
