@@ -12,6 +12,13 @@ class SelectVehicle extends StatelessWidget {
     {'name': 'Bus', 'image': 'assets/images/bus.png'},
   ];
 
+  final List<Color> vehicleColors = [
+    Color(0xFF46C2AF),  // Color for Car (Electric Blue)
+    Color(0xFF46C2AF),  // Color for Bike (Vibrant Purple)
+    Color(0xFF46C2AF),  // Color for Truck (Forest Green)
+    Color(0xFF46C2AF), // Color for Bus
+  ];
+
   Future<void> saveSelectedVehicle(String vehicle) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedVehicle', vehicle);
@@ -82,7 +89,7 @@ class SelectVehicle extends StatelessWidget {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: vehicleColors[index], // Use different colors for each card
                             borderRadius: BorderRadius.circular(15.0),
                             boxShadow: [
                               BoxShadow(
@@ -116,7 +123,7 @@ class SelectVehicle extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black87,
+                                  color: Colors.white, // White text for contrast
                                 ),
                               ),
                               // Subtext (Optional)
@@ -125,7 +132,7 @@ class SelectVehicle extends StatelessWidget {
                                 'Tap to select',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey[600],
+                                  color: Colors.white70, // Lighter text for subtext
                                 ),
                               ),
                             ],
