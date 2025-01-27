@@ -192,7 +192,7 @@ class _SelectDateState extends State<SelectDate> {
                       style: TextStyle(
                         fontSize: 18, // Increased font size
                         fontWeight: FontWeight.bold, // Bold text
-                        color: Color(0xFF46C2AF), // Highlight color
+                        color: Color(0xFF34A0A4), // Highlight color
                       ),
                     ),
                   ),
@@ -231,7 +231,7 @@ class _SelectDateState extends State<SelectDate> {
                     }
                         : null, // Disable button if no appointments are available
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Color(0xFF46C2AF), // White text color
+                      foregroundColor: Colors.white, backgroundColor: Color(0xFF34A0A4), // White text color
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(500.0), // Rounded corners
                       ),

@@ -20,10 +20,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF46C2AF),
+      backgroundColor: const Color(0xFF34A0A4),
       appBar: AppBar(
         title: const Text('Login'),
-        backgroundColor: const Color(0xFF46C2AF),
+        backgroundColor: const Color(0xFF34A0A4),
         centerTitle: true,
         automaticallyImplyLeading: false, // This removes the back button
       ),
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                             );
                           },
-                          const Color(0xFF46C2AF),
+                          const Color(0xFF34A0A4),
                           Colors.white,
                         ),
                       ),

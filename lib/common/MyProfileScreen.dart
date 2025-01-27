@@ -52,14 +52,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 children: [
                   CircleAvatar(
                     radius: 40, // Smaller profile image
-                    backgroundColor: Color(0xFF46C2AF),
+                    backgroundColor: Color(0xFF34A0A4),
                     child: CircleAvatar(
                       radius: 38,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Icons.person,
                         size: 40, // Smaller icon
-                        color: Color(0xFF46C2AF),
+                        color: Color(0xFF34A0A4),
                       ),
                     ),
                   ),
@@ -125,7 +125,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       child: ListTile(
         leading: CircleAvatar(
           radius: 20, // Smaller icon size
-          backgroundColor: Color(0xFF46C2AF),
+          backgroundColor: Color(0xFF34A0A4),
           child: Icon(icon, color: Colors.white, size: 20), // Smaller icon
         ),
         title: Text(

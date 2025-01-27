@@ -139,7 +139,7 @@ class _SelectPackageState extends State<SelectPackage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          color: Color(0xFF46C2AF),
+                          color: Color(0xFF34A0A4),
                           elevation: 5,
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),

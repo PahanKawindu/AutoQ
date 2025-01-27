@@ -20,7 +20,7 @@ class AboutUsScreen extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundColor: Color(0xFF46C2AF), // Set the same background color here
+                backgroundColor: Color(0xFF34A0A4), // Set the same background color here
                 child: Text(
                   'AutoQ',
                   style: TextStyle(

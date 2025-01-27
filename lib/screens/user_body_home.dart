@@ -186,7 +186,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                 controller: _pageController,
                 count: services.length,
                 effect: ExpandingDotsEffect(
-                  activeDotColor: Color(0xFF46C2AF),
+                  activeDotColor: Color(0xFF34A0A4),
                   dotHeight: 8,
                   dotWidth: 8,
                 ),
@@ -217,7 +217,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
                       assetPath: 'assets/images/reserve.svg',
-                      backgroundColor: Color(0xFF46C2AF),
+                      backgroundColor: Color(0xFF34A0A4),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -233,7 +233,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'Check the Queue',
                       description: 'Stay updated on your service progress in real-time.',
                       assetPath: 'assets/images/check.svg',
-                      backgroundColor: Color(0xFF46C2AF),
+                      backgroundColor: Color(0xFF34A0A4),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -249,7 +249,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
                       assetPath: 'assets/images/about.svg',
-                      backgroundColor: Color(0xFF46C2AF),
+                      backgroundColor: Color(0xFF34A0A4),
                       onTap: () {
                         Navigator.push(
                           context,

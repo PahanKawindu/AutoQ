@@ -33,7 +33,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => checkSession(context));
     return Scaffold(
-      backgroundColor: const Color(0xFF46C2AF), // Teal background color
+      backgroundColor: const Color(0xFF34A0A4), // Teal background color
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -100,7 +100,7 @@ class WelcomeScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF46C2AF),
+                    backgroundColor: const Color(0xFF34A0A4),
                     // Teal button color
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 15),
@@ -126,7 +126,7 @@ class WelcomeScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF46C2AF),
+                    backgroundColor: const Color(0xFF34A0A4),
                     // Teal button color
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 15),

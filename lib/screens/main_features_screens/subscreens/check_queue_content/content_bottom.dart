@@ -42,7 +42,7 @@ class ContentBottom extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: Color(0xFF46C2AF), // White text color
+                  foregroundColor: Colors.white, backgroundColor: Color(0xFF34A0A4), // White text color
                   minimumSize: Size(200, 40), // Increased width and height for button
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16), // Padding for button text
                   textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Text styling

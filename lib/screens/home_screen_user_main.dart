@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreenUser> {
           title: const Text(
             'AutoQ',
             style: TextStyle(
-              color: Color(0xFF46C2AF),
+              color: Color(0xFF34A0A4),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -195,11 +195,18 @@ class _HomeScreenState extends State<HomeScreenUser> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xFF46C2AF),
+          selectedItemColor: Color(0xFF34A0A4),
           unselectedItemColor: Colors.grey,
+          selectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.bold, // Bold text for selected items
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.bold, // Bold text for unselected items
+          ),
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
         ),
+
       ),
     );
   }

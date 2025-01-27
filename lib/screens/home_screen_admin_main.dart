@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
           title: const Text(
             'AutoQ',
             style: TextStyle(
-              color: Color(0xFF46C2AF),
+              color: Color(0xFF34A0A4),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreenAdmin> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xFF46C2AF),
+          selectedItemColor: Color(0xFF34A0A4),
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
