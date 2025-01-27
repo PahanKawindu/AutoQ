@@ -222,6 +222,7 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
         });
       }
 
+
       // Send notification to the user
       await NotificationHandler.sendNotification(
         deviceToken, // Device token from Firestore
