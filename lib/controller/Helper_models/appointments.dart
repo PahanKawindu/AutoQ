@@ -106,5 +106,21 @@ class AppointmentsService {
       return false;
     }
   }
+
+  Future<bool> hasTodayAppointment(String uid, DateTime today) async {
+    // Fetch all appointments for the given user ID and today's date
+    // Assuming you have a Firestore instance initialized as firestore
+    final querySnapshot = await _firestore
+        .collection('appointments')
+        .where('uid', isEqualTo: uid)
+        .where('appointmentDate',
+        isGreaterThanOrEqualTo: DateTime(today.year, today.month, today.day))
+        .where('appointmentDate',
+        isLessThan: DateTime(today.year, today.month, today.day + 1))
+        .get();
+
+    return querySnapshot.docs.isNotEmpty;
+  }
+
 }
 

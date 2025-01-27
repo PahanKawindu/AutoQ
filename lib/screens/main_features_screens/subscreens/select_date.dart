@@ -1,3 +1,4 @@
+// select_date.dart
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,20 @@ class _SelectDateState extends State<SelectDate> {
   int? _nextQueueNumber;
   String? _estimatedQueueTime;
   bool _isAppointmentAvailable = true;
+  bool _hasTodayAppointment = false;
+  String? _currentUserId;
+
+  Future<void> _checkTodayAppointment() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    if (uid != null) {
+      bool hasAppointment = await _appointmentsService.hasTodayAppointment(uid, DateTime.now());
+      setState(() {
+        _currentUserId = uid;
+        _hasTodayAppointment = hasAppointment;
+      });
+    }
+  }
 
   Future<void> _fetchAndLogLimit() async {
     int limit = await _appointmentLimitsService.getAppointmentLimit(_selectedDate);
@@ -80,6 +95,7 @@ class _SelectDateState extends State<SelectDate> {
   @override
   void initState() {
     super.initState();
+    _checkTodayAppointment();
     _fetchAndLogLimit();
     _fetchAndLogAppointmentsCount();
     _fetchAndLogNextQueueAndTime();
@@ -95,7 +111,29 @@ class _SelectDateState extends State<SelectDate> {
         color: Colors.white, // Set body background color to white
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
+          child: _hasTodayAppointment
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Currently, our service is limited to only one appointment per day.',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Redirect to home screen
+                },
+                child: Text('Go to Home'),
+              ),
+            ],
+          )
+              : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Title Section
