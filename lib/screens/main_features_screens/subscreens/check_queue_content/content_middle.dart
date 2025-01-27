@@ -41,10 +41,11 @@ class _ContentMiddleState extends State<ContentMiddle> {
     if (status == 'servicing') {
       return AnimatedSwitcher(
         duration: Duration(seconds: 1),
-        child: Image.asset(
-          'assets/videos/service.webm', // Your servicing animation
+        child: Icon(
+          Icons.car_repair, // You can use a waiting icon
           key: ValueKey('servicing'),
-          height: 60,
+          size: 60,
+          color: Colors.orange,
         ),
       );
     } else if (status == 'waiting') {
