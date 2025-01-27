@@ -24,6 +24,7 @@ class _SelectDateState extends State<SelectDate> {
   int? _appointmentsCount;
   int? _nextQueueNumber;
   String? _estimatedQueueTime;
+  String? _formatedEstimatedQueueTime;
   bool _isAppointmentAvailable = true;
   bool _hasTodayAppointment = false;
   String? _currentUserId;
@@ -65,6 +66,20 @@ class _SelectDateState extends State<SelectDate> {
     setState(() {
       _nextQueueNumber = result['nextQueueNumber'];
       _estimatedQueueTime = result['estimatedQueueTime'];
+
+      if (_estimatedQueueTime != null) {
+        // Parse the _estimatedQueueTime to a DateTime object
+        DateTime estimatedTime = DateTime.parse(_estimatedQueueTime!);
+
+        // Extract the hours and minutes
+        _formatedEstimatedQueueTime = '${estimatedTime.hour.toString().padLeft(2, '0')}:${estimatedTime.minute.toString().padLeft(2, '0')}';
+
+        // Log and save to a new variable
+        print('Here--------------------: $_estimatedQueueTime');
+        print('Formatted Time----------: $_formatedEstimatedQueueTime');
+      } else {
+        print('Error: _estimatedQueueTime is null');
+      }
     });
   }
 
@@ -199,7 +214,7 @@ class _SelectDateState extends State<SelectDate> {
                   SizedBox(height: 10),
                   Center(
                     child: Text(
-                      'Estimated Queue Time: $_estimatedQueueTime',
+                      'Estimated Queue Time: $_formatedEstimatedQueueTime',
                       style: TextStyle(
                         fontSize: 16, // Adjusted font size
                         color: Colors.black87, // Regular color for contrast
