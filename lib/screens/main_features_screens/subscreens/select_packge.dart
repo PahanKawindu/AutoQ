@@ -139,6 +139,7 @@ class _SelectPackageState extends State<SelectPackage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
+                          color: Color(0xFF46C2AF),
                           elevation: 5,
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -163,7 +164,7 @@ class _SelectPackageState extends State<SelectPackage> {
                                         'Approx Time: ${package['ApproxServiceTime'] ?? 'N/A'}',
                                         style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.grey,
+                                          color: Colors.white,
                                         ),
                                       ),
                                       SizedBox(height: 8),
@@ -171,7 +172,7 @@ class _SelectPackageState extends State<SelectPackage> {
                                         'Price: ${package['Price']}',
                                         style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.grey,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ],

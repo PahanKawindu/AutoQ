@@ -104,8 +104,8 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  Color(0xFF98D8EF), // Light blue
-                                  Color(0xFF0077FF), // Darker blue
+                                  Color(0xFF000000), // Light blue
+                                  Color(0xFF008080), // Darker blue
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -126,31 +126,31 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                                         style: const TextStyle(
                                           fontSize: 21,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Color(0xFFEEF1B0),
                                         ),
                                       ),
                                       const SizedBox(height: 15.0),
                                       Text(
                                         'Approx Time : ${service['ApproxServiceTime'] ?? 'N/A'}',
                                         style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black54,
+                                          fontSize: 15,
+                                          color: Colors.white,
                                         ),
                                       ),
                                       const SizedBox(height: 3.0),
                                       Text(
                                         'Vehicle Type : ${service['VehicleType']}',
                                         style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black54,
+                                          fontSize: 15,
+                                          color: Colors.white,
                                         ),
                                       ),
                                       const SizedBox(height: 3.0),
                                       Text(
                                         'Price      : Rs.${service['Price']}',
                                         style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black54,
+                                          fontSize: 15,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ],
@@ -186,7 +186,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                 controller: _pageController,
                 count: services.length,
                 effect: ExpandingDotsEffect(
-                  activeDotColor: Colors.blue,
+                  activeDotColor: Color(0xFF46C2AF),
                   dotHeight: 8,
                   dotWidth: 8,
                 ),
@@ -217,7 +217,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'Reserve Your Spot',
                       description: 'Book your service appointment today.',
                       assetPath: 'assets/images/reserve.svg',
-                      backgroundColor: Color(0xFF34A0A4),
+                      backgroundColor: Color(0xFF46C2AF),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -233,7 +233,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'Check the Queue',
                       description: 'Stay updated on your service progress in real-time.',
                       assetPath: 'assets/images/check.svg',
-                      backgroundColor: Color(0xFF34A0A4),
+                      backgroundColor: Color(0xFF46C2AF),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -249,7 +249,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                       title: 'About Us',
                       description: 'Learn more about our services and team.',
                       assetPath: 'assets/images/about.svg',
-                      backgroundColor: Color(0xFF34A0A4),
+                      backgroundColor: Color(0xFF46C2AF),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -304,6 +304,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                         title,
                         style: const TextStyle(
                           fontSize: 18,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
