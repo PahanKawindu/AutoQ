@@ -5,8 +5,7 @@ import 'package:googleapis/servicecontrol/v1.dart' as servicecontrol;
 
 class NotificationHandler {
   static Future<String> getAccessToken() async {
-    final serviceAccountJson = {'here'
-    };
+    final serviceAccountJson ={''};
     List<String> scopes = [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/firebase.database",

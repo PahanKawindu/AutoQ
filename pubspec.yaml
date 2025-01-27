@@ -52,17 +52,31 @@ dependencies:
   flutter_svg: ^2.0.7
   cached_network_image: ^3.2.3
   video_player: ^2.5.0
+  flutter_launcher_icons: "^0.14.3"
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.14.1"
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.14.3"
+
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
-  image_path: "assets/icon/icon.png"
-  adaptive_icon_background: "FFFFFFFF"
-  adaptive_icon_foreground: "assets/icon/icon.png"
+  image_path: "assets/images/autoQ.png"
+
+  web:
+    generate: true
+    image_path: "assets/android/mipmap-xhdpi/autoq.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/android/mipmap-xhdpi/autoq.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/android/mipmap-xhdpi/autoq.png"
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -97,6 +111,8 @@ flutter:
     - assets/images/car.png
     - assets/images/lorry.png
     - assets/videos/service.webm
+    - assets/android/mipmap-xhdpi/autoq.png
+    - assets/images/autoQ.png
 
 
   # To add assets to your application, add an assets section, like this:
