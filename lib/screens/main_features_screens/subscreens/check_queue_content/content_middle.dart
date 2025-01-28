@@ -123,8 +123,16 @@ class _ContentMiddleState extends State<ContentMiddle> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         color: record['status'] == 'completed'
-                            ? Colors.green.shade100
-                            : Colors.white,
+                            ? Colors.green.shade100 // Completed status color with a deeper shade
+                            : record['status'] == 'servicing'
+                            ? Colors.orange.shade100 // Servicing status color with a deeper shade
+                            : record['status'] == 'waiting'
+                            ? Colors.yellow.shade100 // Waiting status color with a deeper shade
+                            : record['status'] == 'canceled'
+                            ? Colors.red.shade100 // Canceled status color with a deeper shade
+                            : Colors.white, // Default color
+
+
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(

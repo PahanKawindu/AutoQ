@@ -68,11 +68,28 @@ class ContentBottom extends StatelessWidget {
             )
           else if (currentServicingPosition > int.parse(userPosition))
           // Display message in red if userPosition > currentServicingPosition
-            Text(
-              'Please contact us as soon as possible!',
-              style: TextStyle(fontSize: 18, color: Colors.red, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.warning, // Use a suitable icon
+                  color: Colors.red,
+                  size: 24, // Adjust icon size
+                ),
+                SizedBox(width: 8), // Add spacing between icon and text
+                Text(
+                  'Please contact us as soon as possible!',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
+
       ],
     );
   }

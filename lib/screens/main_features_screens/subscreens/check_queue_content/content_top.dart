@@ -42,17 +42,18 @@ class _ContentTopState extends State<ContentTop> with SingleTickerProviderStateM
         mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
         children: [
           // Current Queue Row
+          // Current Queue Row
           Row(
             mainAxisAlignment: MainAxisAlignment.center, // Center align the row
             children: [
               SizedBox(height: 60), // Space above the content
               if (widget.totalPositionsToday != 0)
                 Text(
-                  'Current Queue     ',
+                  'Current Queue  :    ',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black, // White text color
                   ),
                 ),
               // Conditional message display
@@ -63,18 +64,19 @@ class _ContentTopState extends State<ContentTop> with SingleTickerProviderStateM
                   'No reservation yet. You are the first one!',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black54,
+                    color: Colors.white70, // Light white color for the message
                   ),
                 ),
               )
-              : AnimatedContainer(
+                  : AnimatedContainer(
                 duration: Duration(seconds: 1), // Animation duration for border changes
                 curve: Curves.easeInOut, // Smooth curve for the animation
                 margin: const EdgeInsets.only(top: 5.0), // Margin for separation
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24), // Adjust padding for better spacing
                 decoration: BoxDecoration(
+                  color: Colors.black87, // Black background for the container
                   border: Border.all(
-                    color: Colors.black54, // Black border color with opacity
+                    color: Colors.white, // White border color
                     width: 1.0, // Set border width
                   ),
                   borderRadius: BorderRadius.circular(12), // Rounded corners for a smoother look
@@ -82,16 +84,16 @@ class _ContentTopState extends State<ContentTop> with SingleTickerProviderStateM
                 child: Text(
                   '${widget.currentServicingPosition} / ${widget.totalPositionsToday}',
                   style: TextStyle(
-                    fontSize: 16, // Slightly larger font size
-                    color: Colors.black87, // Text color
+                    fontSize: 17, // Slightly larger font size
+                    color: Colors.white, // White text color
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center, // Ensure text is centered inside the box
                 ),
               ),
-
             ],
           ),
+
 
           // Display userPosition below the current queue
           if (widget.totalPositionsToday != 0)

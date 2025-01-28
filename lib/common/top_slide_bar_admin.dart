@@ -52,7 +52,7 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
           // Drawer Header with Back Button in top-right corner
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Color(0xFF46C2AF),
+              color: Color(0xFF34A0A4),
             ),
             child: Stack(
               children: [
@@ -61,14 +61,14 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
                   children: [
                     CircleAvatar(
                       radius: 30, // Larger size
-                      backgroundColor: Color(0xFF46C2AF), // Border color
+                      backgroundColor: Color(0xFF34A0A4), // Border color
                       child: CircleAvatar(
                         radius: 45, // Inner circle with some padding
                         backgroundColor: Colors.white, // Background color inside the border
                         child: Icon(
                           Icons.person, // Default profile icon
                           size: 40, // Icon size
-                          color: Color(0xFF46C2AF), // Icon color
+                          color: Color(0xFF34A0A4), // Icon color
                         ),
                       ),
                     ),
@@ -117,7 +117,7 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
           ),
           // Drawer Items
           ListTile(
-            leading: Icon(Icons.person, color: Color(0xFF46C2AF)),
+            leading: Icon(Icons.person, color: Color(0xFF34A0A4)),
             title: Text('My Profile'),
             onTap: () {
               Navigator.push(
@@ -129,7 +129,7 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.info, color: Color(0xFF46C2AF)),
+            leading: Icon(Icons.info, color: Color(0xFF34A0A4)),
             title: Text('About Us'),
             onTap: () {
               Navigator.push(
@@ -141,7 +141,7 @@ class _TopSlideBarState extends State<TopSlideBarAdmin> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.help, color: Color(0xFF46C2AF)),
+            leading: Icon(Icons.help, color: Color(0xFF34A0A4)),
             title: Text('Help & Support'),
             onTap: () {
               Navigator.push(

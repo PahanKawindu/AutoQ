@@ -50,7 +50,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
           // Drawer Header with Back Button in top-right corner
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Color(0xFF46C2AF),
+              color: Color(0xFF34A0A4),
             ),
             child: Stack(
               children: [
@@ -66,7 +66,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
                         child: Icon(
                           Icons.person, // Default profile icon
                           size: 40, // Icon size
-                          color: Color(0xFF46C2AF), // Icon color
+                          color: Color(0xFF34A0A4), // Icon color
                         ),
                       ),
                     ),
@@ -115,7 +115,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
           ),
           // Drawer Items
           ListTile(
-            leading: Icon(Icons.person, color: Color(0xFF46C2AF)),
+            leading: Icon(Icons.person, color: Color(0xFF34A0A4)),
             title: Text('My Profile'),
             onTap: () {
               Navigator.push(
@@ -127,7 +127,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.info, color: Color(0xFF46C2AF)),
+            leading: Icon(Icons.info, color: Color(0xFF34A0A4)),
             title: Text('About Us'),
             onTap: () {
               Navigator.push(
@@ -139,7 +139,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.help, color: Color(0xFF46C2AF)),
+            leading: Icon(Icons.help, color: Color(0xFF34A0A4)),
             title: Text('Help & Support'),
             onTap: () {
               Navigator.push(
