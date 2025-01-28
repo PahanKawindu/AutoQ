@@ -173,7 +173,7 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF46C2AF),
+                    backgroundColor: Color(0xFF34A0A4),
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                     shape: RoundedRectangleBorder(
@@ -251,7 +251,7 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
             children: [
               Icon(
                 Icons.check_circle_outline,
-                color: Color(0xFF46C2AF),
+                color: Color(0xFF34A0A4),
               ),
               SizedBox(width: 8),
               Text(
@@ -275,7 +275,7 @@ class _SetReservationLimitationAdminState extends State<SetReservationLimitation
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               style: TextButton.styleFrom(
-                foregroundColor: Color(0xFF46C2AF),
+                foregroundColor: Color(0xFF34A0A4),
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 textStyle: TextStyle(
                   fontSize: 16,

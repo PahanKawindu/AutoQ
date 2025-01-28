@@ -13,10 +13,10 @@ class SelectVehicle extends StatelessWidget {
   ];
 
   final List<Color> vehicleColors = [
-    Color(0xFF46C2AF),  // Color for Car (Electric Blue)
-    Color(0xFF46C2AF),  // Color for Bike (Vibrant Purple)
-    Color(0xFF46C2AF),  // Color for Truck (Forest Green)
-    Color(0xFF46C2AF), // Color for Bus
+    Color(0xFF34A0A4),  // Color for Car (Electric Blue)
+    Color(0xFF34A0A4),  // Color for Bike (Vibrant Purple)
+    Color(0xFF34A0A4),  // Color for Truck (Forest Green)
+    Color(0xFF34A0A4), // Color for Bus
   ];
 
   Future<void> saveSelectedVehicle(String vehicle) async {

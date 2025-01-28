@@ -59,7 +59,7 @@ class _TopSlideBarState extends State<TopSlideBar> {
                   children: [
                     CircleAvatar(
                       radius: 30, // Larger size
-                      backgroundColor: Color(0xFF46C2AF), // Border color
+                      backgroundColor: Color(0xFF34A0A4), // Border color
                       child: CircleAvatar(
                         radius: 45, // Inner circle with some padding
                         backgroundColor: Colors.white, // Background color inside the border

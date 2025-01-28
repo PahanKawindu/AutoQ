@@ -161,7 +161,7 @@ class _PaymentControllerState extends State<PaymentController> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF46C2AF),
+                          backgroundColor: Color(0xFF34A0A4),
                           padding: EdgeInsets.symmetric(vertical: 12.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0),

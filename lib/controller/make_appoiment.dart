@@ -127,7 +127,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25), // Rounded corners for a soft look
           side: BorderSide(
-            color: Color(0xFF46C2AF), // Thin green border
+            color: Color(0xFF34A0A4), // Thin green border
             width: 1, // Thin border
           ),
         ),
@@ -209,7 +209,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF46C2AF), // Use theme green for the button
+                  backgroundColor: Color(0xFF34A0A4), // Use theme green for the button
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50), // Rounded button corners
                   ),

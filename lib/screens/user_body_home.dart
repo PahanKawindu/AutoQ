@@ -186,7 +186,7 @@ class _UserHomeBodyState extends State<UserHomeBody> {
                 controller: _pageController,
                 count: services.length,
                 effect: ExpandingDotsEffect(
-                  activeDotColor: Color(0xFF46C2AF),
+                  activeDotColor: Color(0xFF34A0A4),
                   dotHeight: 8,
                   dotWidth: 8,
                 ),

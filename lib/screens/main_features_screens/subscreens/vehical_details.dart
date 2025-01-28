@@ -260,7 +260,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                   }
                       : null, // Disable button if form is not valid
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: Color(0xFF46C2AF), // White text color
+                    foregroundColor: Colors.white, backgroundColor: Color(0xFF34A0A4), // White text color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(500.0), // Rounded corners
                     ),

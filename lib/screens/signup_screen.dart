@@ -25,10 +25,10 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xFF46C2AF),
+      backgroundColor: const Color(0xFF34A0A4),
       appBar: AppBar(
         title: const Text('SIGN UP'),
-        backgroundColor: const Color(0xFF46C2AF),
+        backgroundColor: const Color(0xFF34A0A4),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -139,7 +139,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           context: context,
                         );
                       },
-                      const Color(0xFF46C2AF),
+                      const Color(0xFF34A0A4),
                       Colors.white,
                     ),
                   ),

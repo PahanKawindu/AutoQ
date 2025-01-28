@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text(
             'AutoQ',
             style: TextStyle(
-              color: Color(0xFF46C2AF),
+              color: Color(0xFF34A0A4),
               fontWeight: FontWeight.bold,
             ),
           ),

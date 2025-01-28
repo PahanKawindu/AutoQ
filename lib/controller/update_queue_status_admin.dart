@@ -80,7 +80,7 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
                   ? CircularProgressIndicator()
                   : ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF46C2AF),
+                  backgroundColor: const Color(0xFF34A0A4),
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -143,7 +143,7 @@ class _UpdateQueueStatusAdminState extends State<UpdateQueueStatusAdmin> {
             _selectedStatus = value;
           });
         },
-        activeColor: const Color(0xFF46C2AF),
+        activeColor: const Color(0xFF34A0A4),
       );
     }).toList();
   }

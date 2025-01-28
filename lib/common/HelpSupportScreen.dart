@@ -24,7 +24,7 @@ class HelpSupportScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 26, // Adjusted for better prominence
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF46C2AF),
+                    color: Color(0xFF34A0A4),
                   ),
                 ),
               ),
@@ -115,7 +115,7 @@ class HelpSupportScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 14), // Adjusted for compactness
       child: Row(
         children: [
-          Icon(icon, size: 28, color: Color(0xFF46C2AF)), // Updated color
+          Icon(icon, size: 28, color: Color(0xFF34A0A4)), // Updated color
           SizedBox(width: 18), // Adjusted space between icon and text
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +165,7 @@ class HelpSupportScreen extends StatelessWidget {
   Widget _buildSocialMediaButton(IconData icon, String platform, String handle) {
     return Column(
       children: [
-        Icon(icon, color: Color(0xFF46C2AF), size: 36), // Updated color
+        Icon(icon, color: Color(0xFF34A0A4), size: 36), // Updated color
         SizedBox(height: 8),
         Text(
           platform,
