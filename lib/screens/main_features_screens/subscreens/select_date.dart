@@ -129,8 +129,20 @@ class _SelectDateState extends State<SelectDate> {
                 onPressed: () {
                   Navigator.pop(context); // Redirect to home screen
                 },
-                child: Text('Go to Home'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal, // Teal background color
+                  foregroundColor: Colors.white, // White text color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50), // Border radius of 50
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Add some padding for a better look
+                ),
+                child: Text(
+                  'Go to Home',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Bold text with a readable size
+                ),
               ),
+
             ],
           )
               : Column(
