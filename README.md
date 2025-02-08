@@ -1,6 +1,5 @@
-@ -1,109 +0,0 @@
 <p align="center">
-  <img src="./reademeContentData/autoQ.png" alt="Admin Dashboard" width="80%" height="80%" />
+  <img src="./readmeResources/Srcreenshots/Main.png" alt="Admin Dashboard" width="80%" height="80%" />
 </p>
 
 <h1 align="center">AutoQ - Vehicle Service Center Management App</h1>
@@ -79,21 +78,28 @@ AutoQ is a mobile application designed to streamline vehicle service management.
 ### Screenshots
 
 Here are some interface screenshots of the application:
+<h3>Login/Signup:<h3>
+<p align="center">
+  <img src="./readmeResources/Srcreenshots/login-1.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/login-2.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/login-3.png" alt="" width="40%" height="40%" />
+</p>
+  
 <h3>User:<h3>
 <p align="center">
-  <img src="./readmeResources/Srcreenshots/Admin/1.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Admin/2.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Admin/3.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Admin/4.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Admin/5.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/user-1.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/user-14.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/user-15.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/user-10.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/user-7.png" alt="" width="40%" height="40%" />
 </p>
   
 <h3>Admin:<h3>
 <p align="center">
-  <img src="./readmeResources/Srcreenshots/Techer/1.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Techer/2.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Techer/3.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/Techer/4.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/admin-1.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/admin-2.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/admin-3.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/admin-4.png" alt="" width="40%" height="40%" />
 </p>
 
 
@@ -102,8 +108,8 @@ Here are some interface screenshots of the application:
 Here's a short demonstration of the AutoQ:
 
 <p align="center">
-  <a href="https://youtu.be/sample-demo-link">
-    <img src="./screenshots/demo_thumbnail.png" alt="App Demo" width="50%" height="50%" />
+  <a href="https://youtu.be/sample-demo-link](https://youtu.be/BM-duwSDhAg)">
+    <img src="./readmeResources/Srcreenshots/demo_thumbnail.png" alt="App Demo" width="50%" height="50%" />
   </a>
 </p>
 
