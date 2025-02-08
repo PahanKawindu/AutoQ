@@ -80,32 +80,32 @@ AutoQ is a mobile application designed to streamline vehicle service management.
 Here are some interface screenshots of the application:
 <h3>Login/Signup:<h3>
 <p align="center">
-  <img src="./readmeResources/Srcreenshots/login-1.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/login-2.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/login-3.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/login-1.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/login-2.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/login-3.png" alt="" width="30%" height="30%" />
 </p>
   
 <h3>User:<h3>
 <p align="center">
-  <img src="./readmeResources/Srcreenshots/user-1.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/user-14.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/user-15.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/user-10.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/user-7.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/user-1.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/user-14.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/user-15.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/user-10.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/user-7.png" alt="" width="30%" height="30%" />
 </p>
   
 <h3>Admin:<h3>
 <p align="center">
-  <img src="./readmeResources/Srcreenshots/admin-1.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/admin-2.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/admin-3.png" alt="" width="40%" height="40%" />
-  <img src="./readmeResources/Srcreenshots/admin-4.png" alt="" width="40%" height="40%" />
+  <img src="./readmeResources/Srcreenshots/admin-1.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/admin-2.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/admin-3.png" alt="" width="30%" height="30%" />
+  <img src="./readmeResources/Srcreenshots/admin-4.png" alt="" width="30%" height="30%" />
 </p>
 
 
 ### Demonstration
 
-Here's a short demonstration of the AutoQ:
+Here's a demonstration of the AutoQ:
 
 <p align="center">
   <a href="https://youtu.be/sample-demo-link](https://youtu.be/BM-duwSDhAg)">
