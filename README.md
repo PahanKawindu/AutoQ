@@ -108,9 +108,21 @@ Here are some interface screenshots of the application:
 Here's a demonstration of the AutoQ:
 
 <p align="center">
-  <a href="https://youtu.be/sample-demo-link](https://youtu.be/BM-duwSDhAg)">
+  <a href="https://youtu.be/BM-duwSDhAg">
     <img src="./readmeResources/Srcreenshots/demo_thumbnail.png" alt="App Demo" width="50%" height="50%" />
   </a>
 </p>
 
+---
+
+## Final APK Download
+
+You can download the latest version of the **AutoQ** APK from the link below:
+
+➡ **[Download APK] [AutoQ APK](https://drive.google.com/file/d/1cTHIg3ROCwilh-TCHz0bB_EZKHUEpeYY/view?usp=sharing)**
+
+---
+
+### ⚠ Important Note
+- **Last Updated:** *2025-02-09*
    
